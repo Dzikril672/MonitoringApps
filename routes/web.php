@@ -27,3 +27,4 @@ Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
 Route::get('/profil', [ProfilController::class, 'profil']);
 Route::get('/timeline', [MonitoringController::class, 'timeline']);
 Route::get('/updateprofil', [UpdateController::class,'updateprofil']);
+// Route::get('/test', [MonitoringController::class, 'index']);

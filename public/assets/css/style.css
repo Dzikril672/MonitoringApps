@@ -3696,6 +3696,11 @@ a.badge-dark {
   color: #fff;
 }
 
+.bg-dasar {
+  background: #e9ecef !important;
+  color: #fff;
+}
+
 .bg-secondary {
   background: #6c7c94 !important;
   color: #fff;
@@ -8095,9 +8100,28 @@ body.dark-mode-active .cart-item .cart-item-footer {
   justify-content: space-around;
 }
 
+.fixed-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #e9ecef;
+}
+
+.content {
+  margin-top: 100px; /* Sesuaikan dengan tinggi header tetap Anda */
+}
+
 #presence-section {
   position: absolute;
   top: 150px;
+  width: 100%;
+  background-color: #e9ecef;
+  border-radius: 10px 10px 0px 0px;
+}
+#presence-section2 {
+  position: absolute;
   width: 100%;
   background-color: #e9ecef;
   border-radius: 10px 10px 0px 0px;
