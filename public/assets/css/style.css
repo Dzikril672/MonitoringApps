@@ -8057,6 +8057,11 @@ body.dark-mode-active .cart-item .cart-item-footer {
   padding: 20px;
 }
 
+#user-section-profile {
+  height: 140px;
+  padding: 20px;
+}
+
 #user-detail {
   margin-top: 20px;
   display: flex;
@@ -8067,10 +8072,10 @@ body.dark-mode-active .cart-item .cart-item-footer {
   line-height: 2px;
 }
 #user-name {
-  color: white;
+  color: black;
 }
 #user-role {
-  color: white;
+  color: black;
 }
 
 #menu-section {
