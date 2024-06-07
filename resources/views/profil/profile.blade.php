@@ -14,7 +14,7 @@
 <div class="section" style="margin-top: 70px;" id="user-section">
     <div class="container">
         <div class="profile-page">
-            <div class="profile-info d-flex">
+            <div class="profile-info d-flex mt-3">
                 <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="Profile Picture" class="rounded-circle" width="70">
                 <div id="user-info">
                     <h2 id="user-name">Dzikril Hakim</h2>
@@ -32,7 +32,7 @@
                     <div>
                         <h3>Edit Profile</h3>
                     </div>
-                        <span class="badge bg-belum">Juni 2024</span>
+                        {{-- <span class="badge bg-belum">Juni 2024</span> --}}
                 </div>
             </div>
         </li>
@@ -59,9 +59,10 @@
                     <div>
                         <h3>Mode Gelap</h3>
                     </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                      </div>
+                        {{-- <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                        </div> --}}
+                    </span>
                 </div>
             </div>
         </li>
@@ -75,7 +76,7 @@
                     <div>
                         <h3>Log Out</h3>
                     </div>
-                        <span class="badge bg-belum">Juni 2024</span>
+                        {{-- <span class="badge bg-belum">Juni 2024</span> --}}
                 </div>
             </div>
         </li>
