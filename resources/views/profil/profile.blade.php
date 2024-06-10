@@ -44,7 +44,7 @@
             <div class="item">
                 <div class="in">
                     <div>
-                        <h3>Delete Account</h3>
+                        <h3>Change Password</h3>
                     </div>
                 </div>
             </div>

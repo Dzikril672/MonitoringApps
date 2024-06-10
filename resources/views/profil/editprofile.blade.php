@@ -3,30 +3,79 @@
 @section('header')
     <!-- App Header -->
     <div class="appHeader bg-primary text-light">
-        <div class="pageTitle">Update Profile</div>
+        <div class="pageTitle">Edit Profile</div>
     </div>
     <!-- * App Header -->
 @endsection
 
+
 @section('content')
-<div class="container">
-    <div class="edit-profile-page">
-        <h1>Edit Profile</h1>
-        <form action="" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="name">Nama</label>
-                <input type="text" id="name" name="name" value="name" required>
+
+<div class="section" style="margin-top: 70px;" id="user-section">
+    <div class="container">
+        <div class="profile-page">
+            <div class="profile-info text-center mt-3">
+                <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="Profile Picture" class="rounded-circle" width="70">
+                {{-- <div id="user-info">
+                    <h2 id="user-name">Dzikril Hakim</h2>
+                    <span id="user-role">Technical Support</span>
+                </div> --}}
             </div>
-            <div class="form-group">
-                <label for="email">Jabatan</label>
-                <input type="email" id="email" name="email" value="email" required>
-            </div>
-            <!-- Tambahkan input lain sesuai kebutuhan -->
-            <div class="form-group">
-                <button type="submit">Save Changes</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+<div class="section mt-3">
+    <ul class="listview image-listview">
+        <li>
+            <div class="item">
+                <div class="in">
+                    <div>
+                        <h3>Edit Profile</h3>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="section mt-3">
+    <ul class="listview image-listview">
+        <li>
+            <div class="item">
+                <div class="in">
+                    <div>
+                        <h3>Change Password</h3>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="section mt-3">
+    <ul class="listview image-listview">
+        <li>
+            <div class="item">
+                <div class="in">
+                    <div>
+                        <h3>Mode Gelap</h3>
+                    </div>
+                    </span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="section mt-3">
+    <ul class="listview image-listview">
+        <li>
+            <div class="item">
+                <div class="in">
+                    <div>
+                        <h3>Log Out</h3>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
 @endsection
