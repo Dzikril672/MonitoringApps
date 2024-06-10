@@ -3,30 +3,40 @@
 @section('header')
     <!-- App Header -->
     <div class="appHeader bg-primary text-light">
-        <div class="pageTitle">Update Profile</div>
+        <div class="pageTitle">Edit Profile</div>
     </div>
     <!-- * App Header -->
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="edit-profile-page">
-        <h1>Edit Profile</h1>
-        <form action="" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="name">Nama</label>
-                <input type="text" id="name" name="name" value="name" required>
+
+<div class="section" style="margin-top: 70px;" id="user-section">
+    <div class="container">
+        <div class="profile-page">
+            <div class="profile-info d-flex mt-3">
+                <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="Profile Picture" class="rounded-circle" width="70">
+                <div id="user-info">
+                    <h2 id="user-name">Dzikril Hakim</h2>
+                    <span id="user-role">Technical Support</span>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Jabatan</label>
-                <input type="email" id="email" name="email" value="email" required>
-            </div>
-            <!-- Tambahkan input lain sesuai kebutuhan -->
-            <div class="form-group">
-                <button type="submit">Save Changes</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+
+<div class="section mt-3">
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="Dzikril Hakim" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role" value="Technical Support" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+        <a href="#" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
 @endsection
