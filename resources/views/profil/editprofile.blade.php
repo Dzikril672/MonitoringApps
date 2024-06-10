@@ -11,7 +11,7 @@
 
 @section('content')
 
-<div class="section" style="margin-top: 70px;" id="user-section">
+<div class="section" style="margin-top: 50px;" id="user-section">
     <div class="container">
         <div class="profile-page">
             <div class="profile-info text-center mt-3">
@@ -36,7 +36,7 @@
             <input type="text" id="role" name="role" value="Technical Support" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Update Profile</button>
-        <a href="#" class="btn btn-secondary">Back</a>
+        <a href="/profil" class="btn btn-secondary">Back</a>
     </form>
 </div>
 
