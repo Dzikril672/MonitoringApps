@@ -37,9 +37,13 @@
             <div class="bold">
                 <hr>
             </div>
-            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center">
-                <i class="fas fa-cog mr-2"></i> Mode Gelap
-            </a>
+            <div class="list-group-item list-group-item-action d-flex align-items-center">
+                <i class="fas fa-moon mr-2"></i> Dark Mode
+                <div class="custom-control custom-switch ml-auto">
+                    <input type="checkbox" class="custom-control-input dark-mode-switch" id="darkmodesidebar">
+                    <label class="custom-control-label" for="darkmodesidebar"></label>
+                </div>
+            </div>
         </div>
     </div>
 </div>

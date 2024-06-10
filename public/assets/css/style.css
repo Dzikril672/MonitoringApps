@@ -7044,8 +7044,13 @@ body.dark-mode-active select option {
   color: #fff;
 }
 
+body.dark-mode-active .text-secondary,
+a.text-secondary {
+  color: #fff !important;
+}
+
 body.dark-mode-active .text-muted {
-  color: #586d7f !important;
+  color: #fff !important;
 }
 
 body.dark-mode-active .bg-dark {
@@ -7227,7 +7232,7 @@ body.dark-mode-active .listview-title {
 }
 
 body.dark-mode-active .listview-title .link {
-  color: #586d7f;
+  color: #fff;
 }
 
 body.dark-mode-active .listview {
@@ -7238,7 +7243,7 @@ body.dark-mode-active .listview {
 }
 
 body.dark-mode-active .listview .text-muted {
-  color: #586d7f !important;
+  color: #fff !important;
 }
 
 body.dark-mode-active .listview > li:after {
@@ -7359,7 +7364,7 @@ body.dark-mode-active .card .card-footer {
 }
 
 body.dark-mode-active .card .text-muted {
-  color: #586d7f !important;
+  color: #fff !important;
 }
 
 body.dark-mode-active .card.bg-light {
@@ -7590,7 +7595,7 @@ body.dark-mode-active .form-wizard-section:before {
 
 body.dark-mode-active .form-wizard-section .button-item strong {
   background: #1b283b;
-  color: #586d7f;
+  color: #fff;
 }
 
 body.dark-mode-active .form-wizard-section .button-item p {

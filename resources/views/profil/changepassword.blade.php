@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div class="section" style="margin-top: 40px;" id="change-password-section">
+<div class="section" style="margin-top: 50px;" id="change-password-section">
     <div class="container">
         <div class="change-password-page">
             <form>
