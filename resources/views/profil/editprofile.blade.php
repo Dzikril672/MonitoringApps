@@ -24,58 +24,20 @@
         </div>
     </div>
 </div>
+
 <div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Edit Profile</h3>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Change Password</h3>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Mode Gelap</h3>
-                    </div>
-                    </span>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Log Out</h3>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="Dzikril Hakim" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role" value="Technical Support" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+        <a href="#" class="btn btn-secondary">Back</a>
+    </form>
 </div>
 
 @endsection
