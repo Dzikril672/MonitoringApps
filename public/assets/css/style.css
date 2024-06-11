@@ -1387,6 +1387,10 @@ b {
   font-weight: 500;
 }
 
+.digi {
+  color: #000;
+}
+
 .page-title {
   display: flex;
   align-items: flex-end;
@@ -7049,8 +7053,13 @@ body.dark-mode-active select option {
   color: #fff;
 }
 
+body.dark-mode-active .text-secondary,
+a.text-secondary {
+  color: #fff !important;
+}
+
 body.dark-mode-active .text-muted {
-  color: #586d7f !important;
+  color: #fff !important;
 }
 
 body.dark-mode-active .bg-dark {
@@ -7059,6 +7068,10 @@ body.dark-mode-active .bg-dark {
 
 body.dark-mode-active .bg-light {
   background: #fff !important;
+}
+
+body.dark-mode-active .digi{
+  color: white;
 }
 
 body.dark-mode-active h1,
@@ -7232,7 +7245,7 @@ body.dark-mode-active .listview-title {
 }
 
 body.dark-mode-active .listview-title .link {
-  color: #586d7f;
+  color: #fff;
 }
 
 body.dark-mode-active .listview {
@@ -7243,7 +7256,7 @@ body.dark-mode-active .listview {
 }
 
 body.dark-mode-active .listview .text-muted {
-  color: #586d7f !important;
+  color: #fff !important;
 }
 
 body.dark-mode-active .listview > li:after {
@@ -7364,7 +7377,7 @@ body.dark-mode-active .card .card-footer {
 }
 
 body.dark-mode-active .card .text-muted {
-  color: #586d7f !important;
+  color: #fff !important;
 }
 
 body.dark-mode-active .card.bg-light {
@@ -7595,7 +7608,7 @@ body.dark-mode-active .form-wizard-section:before {
 
 body.dark-mode-active .form-wizard-section .button-item strong {
   background: #1b283b;
-  color: #586d7f;
+  color: #fff;
 }
 
 body.dark-mode-active .form-wizard-section .button-item p {
@@ -8067,6 +8080,12 @@ body.dark-mode-active .cart-item .cart-item-footer {
   padding: 20px;
 }
 
+#user-section-second {
+  height: 150px;
+  background-color: #F178B6;
+  padding: 20px;
+}
+
 #user-section-profile {
   height: 140px;
   padding: 20px;
@@ -8103,6 +8122,17 @@ body.dark-mode-active .cart-item .cart-item-footer {
 .list-menu {
   display: flex;
   justify-content: space-around;
+}
+
+.list-group-item {
+  background-color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.list-group-item:hover {
+  background-color: #f2f2f2;
 }
 
 .fixed-header {

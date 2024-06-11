@@ -94,7 +94,7 @@
                 <div class="tab-pane fade @if($index == $bulanIni-1) show active @endif" name="" id="{{ strtolower($month) }}" role="tabpanel">
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -110,7 +110,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -126,7 +126,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -142,7 +142,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -158,7 +158,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -174,7 +174,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -190,7 +190,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -206,7 +206,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -222,7 +222,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -238,7 +238,7 @@
                     </ul>
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="/timeline" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>

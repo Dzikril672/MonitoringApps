@@ -11,7 +11,7 @@
 
 @section('content')
 
-<div class="section" style="margin-top: 70px;" id="user-section">
+<div class="section" style="margin-top: 50px;" id="user-section-second">
     <div class="container">
         <div class="profile-page">
             <div class="profile-info d-flex mt-3">
@@ -24,63 +24,39 @@
         </div>
     </div>
 </div>
+
 <div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Edit Profile</h3>
-                    </div>
-                        {{-- <span class="badge bg-belum">Juni 2024</span> --}}
+    <div class="card" style=" margin-top: 20px;">
+        <div class="list-group list-group-flush rounded">
+            <a href="/updateprofil" class="list-group-item list-group-item-action d-flex align-items-center rounded-top">
+                <i class="fas fa-user-edit mr-2"></i> Edit Profile
+            </a>
+            <a href="/changepassword" class="list-group-item list-group-item-action d-flex align-items-center">
+                <i class="fas fa-lock mr-2"></i> Change Password
+            </a>
+            <div class="bold">
+                <hr>
+            </div>
+            <div class="list-group-item list-group-item-action d-flex align-items-center">
+                <i class="fas fa-moon mr-2"></i> Dark Mode
+                <div class="custom-control custom-switch ml-auto">
+                    <input type="checkbox" class="custom-control-input dark-mode-switch" id="darkmodesidebar">
+                    <label class="custom-control-label" for="darkmodesidebar"></label>
                 </div>
             </div>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>
+
 <div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Delete Account</h3>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
+    <div class="card" style="margin-top: 20px;">
+        <div class="list-group list-group-flush rounded">
+            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center rounded" style="color: red">
+                <i class="fas fa-question-circle mr-2"></i> Logout
+            </a>
+        </div>
+    </div>
 </div>
-<div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Mode Gelap</h3>
-                    </div>
-                        {{-- <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                        </div> --}}
-                    </span>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<div class="section mt-3">
-    <ul class="listview image-listview">
-        <li>
-            <div class="item">
-                <div class="in">
-                    <div>
-                        <h3>Log Out</h3>
-                    </div>
-                        {{-- <span class="badge bg-belum">Juni 2024</span> --}}
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
+
 
 @endsection

@@ -4,7 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\UpdateController;
+use App\Http\Controllers\TimelineController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,10 +40,10 @@ Route::get('/', function () {
 //     // Route::get('/test', [MonitoringController::class, 'index']);
 // });
 
-    Route::get('/dashboard', [DashboardController::class, 'home']);
-    Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
-    Route::get('/profil', [ProfilController::class, 'profil']);
-    Route::get('/timeline', [MonitoringController::class, 'timeline']);
-    Route::get('/updateprofil', [UpdateController::class,'updateprofil']);
-
-
+Route::get('/dashboard', [DashboardController::class, 'home']);
+Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
+Route::get('/profil', [ProfilController::class, 'profil']);
+Route::get('/timeline', [MonitoringController::class, 'timeline']);
+Route::get('/updateprofil', [ProfilController::class,'updateprofil']);
+Route::get('/changepassword', [ProfilController::class,'changepass']);
+// Route::get('/test', [MonitoringController::class, 'index']);
