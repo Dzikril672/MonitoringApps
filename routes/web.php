@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\TimelineController;
 use App\Http\Controllers\UpdateController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +22,28 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'home']);
-Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
-Route::get('/profil', [ProfilController::class, 'profil']);
-Route::get('/timeline', [MonitoringController::class, 'timeline']);
-Route::get('/updateprofil', [UpdateController::class,'updateprofil']);
-// Route::get('/test', [MonitoringController::class, 'index']);
+//Session untuk login user mobile
+// Route::middleware(['guest:user']) -> group(function () {
+//     Route::get('/', function () {
+//         return view('auth.login');
+//     })->name('login');
+//     Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
+// });
+
+// Route::middleware(['auth:user'])-> group(function () {
+
+//     Route::get('/dashboard', [DashboardController::class, 'home']);
+//     Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
+//     Route::get('/profil', [ProfilController::class, 'profil']);
+//     Route::get('/timeline', [MonitoringController::class, 'timeline']);
+//     Route::get('/updateprofil', [UpdateController::class,'updateprofil']);
+//     // Route::get('/test', [MonitoringController::class, 'index']);
+// });
+
+    Route::get('/dashboard', [DashboardController::class, 'home']);
+    Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
+    Route::get('/profil', [ProfilController::class, 'profil']);
+    Route::get('/timeline', [MonitoringController::class, 'timeline']);
+    Route::get('/updateprofil', [UpdateController::class,'updateprofil']);
+
+

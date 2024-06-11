@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User as ModelsUser;
 use Exception;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MonitoringController extends Controller
 {
     public function monitoring(){
+        $users = User::all();
+
+        // dd($users);
+
         $bulanIni = date("m") * 1; //mengambil data bulan berjalan agar dapat dibaca data nama bulan (dalam bentuk angka)
         $tahunIni = date("Y");
         $namaBulanTab = [

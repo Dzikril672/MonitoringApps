@@ -6,8 +6,8 @@
             <div class="avatar">
                 <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="avatar" class="imaged w64 rounded">
             </div>
-            <div id="user-info">
-                <h2 id="user-name">Dzikril Hakim</h2>
+            <div id="user-info" style="color:white;">
+                <h2 id="user-name">{{ Auth::user()->name }}</h2>
                 <span id="user-role">Technical Support</span>
             </div>
         </div>
@@ -21,7 +21,7 @@
                         <div class="d-flex align-items-center">
                             <div>
                                 <p class="mb-0 text-secondary">Total Layanan</p>
-                                <h4 class="my-1 text-info">50</h4>
+                                <h4 class="my-1 text-info">{{$totalLayanan}}</h4>
                             </div>
                             <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
                                 <ion-icon name="apps-sharp"></ion-icon>
@@ -42,7 +42,7 @@
                             <div class="d-flex align-items-center">
                                 <div>
                                     <p class="mb-0 text-white">LPP Belum Selesai</p>
-                                    <h4 class="my-1 text-white">50</h4>
+                                    <h4 class="my-1 text-white">{{$lppBelumSelesai}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -54,8 +54,8 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <p class="mb-0 text-white">LPP Berjalan</p>
-                                    <h4 class="my-1 text-white">50</h4>
+                                    <p class="mb-0 text-white">LPP Selesai</p>
+                                    <h4 class="my-1 text-white">{{$lppSelesai}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -63,90 +63,77 @@
                 </div>
             </div>
         </div>
+
         <div id="rekappresensi">
                 <h3 style="font-family: Arial, Helvetica, sans-serif;" class="text-info">Status BAPP/LPP Per {{$namaBulan[$bulanIni]}} {{$tahunIni}}</h3>
         </div>
+
         <div class="presencetab mt-2">
+
+            <!-- tablist panel -->
             <div class="tab-pane fade show active" id="pilled" role="tabpanel">
                 <ul class="nav nav-tabs style1" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
+                        <a class="nav-link active" data-toggle="tab" href="#belumselesai" role="tab">
                             Belum Selesai
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#profile" role="tab">
+                        <a class="nav-link" data-toggle="tab" href="#bulanberjalan" role="tab">
                             Bulan Berjalan
                         </a>
                     </li>
                 </ul>
             </div>
-        </div>
 
-        <div class="tab-content mt-2" style="margin-bottom:100px;">
+            <div class="tab-content mt-2" style="margin-bottom:100px;">
+                <!-- tab belum selesai -->
+                <div class="tab-pane fade show active" id="belumselesai" role="tabpanel">
+                    @if(count($lppDdanger) > 0)
+                        @foreach($lppDdanger as $key => $d)
+                            <ul class="listview image-listview">
+                                <li>
+                                    <div class="item">
+                                        <div class="in">
+                                            <div>
+                                                <b>{{$d['aplikasi']['nama_layanan']}}</b>
+                                                <br>
+                                                <small class="text-muted">{{$d['status']['status_out_tw']}}</small>
+                                            </div>
+                                                <span class="badge bg-belum">{{$comp->tgl_indo($d->bulan) }} {{$d->tahun}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        @endforeach
+                    @else
+                        <div style="text-align: center;"> Semua Layanan Telah Selesai </div>
+                    @endif
+                </div>
 
-            <!-- tab belum selesai -->
-            <div class="tab-pane fade show active" id="home" role="tabpanel">
-                <ul class="listview image-listview">
-                    <li>
-                        <div class="item">
-                            <div class="in">
-                                <div>
-                                    <b>DIGIPROC</b>
-                                    <br>
-                                    <small class="text-muted">Proses Collecting Data dan Dokumen Pendukung</small>
-                                </div>
-                                    <span class="badge bg-belum">Juni 2024</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="listview image-listview">
-                    <li>
-                        <div class="item">
-                            <div class="in">
-                                <div>
-                                    <b>E-PROC</b>
-                                    <br>
-                                    <small class="text-muted">Paraf Manager Icon+</small>
-                                </div>
-                                    <span class="badge bg-belum">April 2024</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- tab bulan berjalan  -->
-            <div class="tab-pane fade" id="profile" role="tabpanel">
-            <ul class="listview image-listview">
-                    <li>
-                        <div class="item">
-                            <div class="in">
-                                <div>
-                                    <b>DIGIPROC</b>
-                                    <br>
-                                    <small class="text-muted">Proses Collecting Data dan Dokumen Pendukung</small>
-                                </div>
-                                    <span class="badge bg-udah">Juni 2024</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul class="listview image-listview">
-                    <li>
-                        <div class="item">
-                            <div class="in">
-                                <div>
-                                    <b>E-PROC</b>
-                                    <br>
-                                    <small class="text-muted">Paraf Manager Icon+</small>
-                                </div>
-                                    <span class="badge bg-udah">April 2024</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <!-- tab bulan berjalan  -->
+                <div class="tab-pane fade" id="bulanberjalan" role="tabpanel">
+                    @if(count($lppInfo) > 0)
+                        @foreach($lppInfo as $key => $i)
+                            <ul class="listview image-listview">
+                                <li>
+                                    <div class="item">
+                                        <div class="in">
+                                            <div>
+                                                <b>{{$i['aplikasi']['nama_layanan']}}</b>
+                                                <br>
+                                                <small class="text-muted">{{$i['status']['status_out_tw']}}</small>
+                                            </div>
+                                                <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        @endforeach
+                    @else
+                        <div style="text-align: center;"> Tidak Ada Layanan Bulan ini </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

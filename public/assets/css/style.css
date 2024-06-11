@@ -646,6 +646,11 @@ button:focus {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
+.error-login {
+  color: red;
+  text-align: left !important;
+}
+
 .profileBox .in {
   line-height: 1.4em;
   padding: 16px 25px 16px 0;
@@ -8077,10 +8082,10 @@ body.dark-mode-active .cart-item .cart-item-footer {
   line-height: 2px;
 }
 #user-name {
-  color: black;
+  color: white;
 }
 #user-role {
-  color: black;
+  color: white;
 }
 
 #menu-section {

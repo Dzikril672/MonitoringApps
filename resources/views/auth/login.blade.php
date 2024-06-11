@@ -36,25 +36,55 @@
             <div class="section mt-1">
                 <h1>Masuk</h1>
                 <h4>Monitoring Dashboard</h4>
-            </div>
+            </div>  
             <div class="section mt-1 mb-5">
-                <form action="app-pages.html">
+
+                @php
+                    $messagewarning = Session::get('warning');
+                @endphp
+
+                @if(Session::get('warning'))
+                    <div class="alert alert-outline-warning mb-1">
+                        {{$messagewarning}}
+                    </div>
+                @endif
+
+                <form action="/loginMobile" method="POST">
+                    @csrf
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="email" class="form-control" id="email1" placeholder="Email address">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email address">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
                         </div>
                     </div>
 
+                    <div class="error-login">
+                        @error('email')
+                        <ion-icon name="alert-circle-outline"></ion-icon>
+                            <small>
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
+
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="password" class="form-control" id="password1" placeholder="Password">
+                            <input type="password" name="password" class="form-control" id="password1" placeholder="Password">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
                         </div>
+                    </div>
+
+                    <div class="error-login">
+                        @error('password')
+                        <ion-icon name="alert-circle-outline"></ion-icon>
+                            <small>
+                                {{$message}}
+                            </small>
+                        @enderror
                     </div>
 
                     <div class="form-links mt-2">

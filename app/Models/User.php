@@ -21,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'profil',
+        'created_by',
+        'updated_by',
+        'phone',
+        'wa',
+        'bidang_id',
     ];
 
     /**
@@ -41,4 +48,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role', 'id_role');
+    }
+
+    public function bidang()
+    {
+        return $this->belongsTo(LayananBidang::class, 'bidang_id', 'id');
+    }
 }
