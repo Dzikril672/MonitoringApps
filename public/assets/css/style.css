@@ -1382,6 +1382,10 @@ b {
   font-weight: 500;
 }
 
+.digi {
+  color: #000;
+}
+
 .page-title {
   display: flex;
   align-items: flex-end;
@@ -7061,6 +7065,10 @@ body.dark-mode-active .bg-light {
   background: #fff !important;
 }
 
+body.dark-mode-active .digi{
+  color: white;
+}
+
 body.dark-mode-active h1,
 body.dark-mode-active h2,
 body.dark-mode-active h3,
@@ -8064,6 +8072,12 @@ body.dark-mode-active .cart-item .cart-item-footer {
 #user-section {
   height: 180px;
   background-color: #5D5FEF;
+  padding: 20px;
+}
+
+#user-section-second {
+  height: 150px;
+  background-color: #F178B6;
   padding: 20px;
 }
 

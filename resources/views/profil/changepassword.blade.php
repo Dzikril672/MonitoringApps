@@ -9,15 +9,11 @@
 @endsection
 
 @section('content')
-<div class="section" style="margin-top: 50px;" id="user-section">
+<div class="section" style="margin-top: 50px;" id="user-section-second">
     <div class="container">
         <div class="profile-page">
             <div class="profile-info text-center mt-3">
                 <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="Profile Picture" class="rounded-circle" width="70">
-                {{-- <div id="user-info">
-                    <h2 id="user-name">Dzikril Hakim</h2>
-                    <span id="user-role">Technical Support</span>
-                </div> --}}
             </div>
         </div>
     </div>
