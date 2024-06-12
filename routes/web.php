@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+// Route::get('/', function () {
+//     return view('auth.login');
+// });
 
 //Session untuk login user mobile
 // Route::middleware(['guest:user']) -> group(function () {
-//     Route::get('/', function () {
-//         return view('auth.login');
-//     })->name('login');
-//     Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
+    Route::get('/', function () {
+        return view('auth.login');
+    })->name('login');
+    Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
 // });
 
 // Route::middleware(['auth:user'])-> group(function () {
@@ -46,4 +46,6 @@ Route::get('/profil', [ProfilController::class, 'profil']);
 Route::get('/timeline', [MonitoringController::class, 'timeline']);
 Route::get('/updateprofil', [ProfilController::class,'updateprofil']);
 Route::get('/changepassword', [ProfilController::class,'changepass']);
+Route::post('/updateprofil', [ProfilController::class, 'updateProfil'])->name('updateprofil');
+
 // Route::get('/test', [MonitoringController::class, 'index']);

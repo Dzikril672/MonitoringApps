@@ -11,4 +11,13 @@ class Role extends Model
     protected $table = 'master_roles';
     protected $guarded = ['id'];
     public $timestamps = true;
+
+    protected $fillable = [
+        'name_role',
+    ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id_role', 'role');
+    }
 }

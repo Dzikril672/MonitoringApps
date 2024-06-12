@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class ProfilController extends Controller
 {
     public function profil(){
-        return view('profil.profile');
+        $user = Auth::user();
+        return view('profil.profile', compact('user'));
     }
+    
     public function updateprofil(){
-        return view("profil.editprofile");
+        $user = Auth::user();
+        return view("profil.editprofile", compact("user"));
     }
     public function changepass(){
         return view("profil.changepassword");

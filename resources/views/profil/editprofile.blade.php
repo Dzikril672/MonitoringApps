@@ -17,7 +17,7 @@
                 <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="Profile Picture" class="rounded-circle" width="70">
                 <div id="user-info">
                     <h2 id="user-name">{{$user->name}}</h2>
-                    <span id="user-role">{{$master_roles->name_role}}</span>
+                    <span id="user-role">{{$user->user}}</span>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
 </div>
 
 <div class="section mt-3">
-    <form method="POST" action="{{route('profil.update')}}">
+    <form method="POST" action="{{route('updateprofil')}}">
         @csrf
         <div class="form-group">
             <label for="name">Name:</label>
