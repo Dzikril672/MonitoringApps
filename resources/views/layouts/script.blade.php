@@ -65,3 +65,5 @@
             ];
         }); // end am4core.ready()
     </script>
+
+    @stack('myscript')
