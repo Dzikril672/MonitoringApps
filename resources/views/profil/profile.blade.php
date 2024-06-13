@@ -17,7 +17,8 @@
                 <img src="{{ asset('assets/img/sample/avatar/avatar1.jpg') }}" alt="Profile Picture" class="rounded-circle" width="70">
                 <div id="user-info">
                     <h2 id="user-name">{{ $user->name }}</h2>
-                    <span id="user-role">{{ $user->name_role }}</span>
+                    {{-- <span id="user-role">Technical Support</span> --}}
+                    <span id="user-role">{{ $role->nama_role }}</span>
                 </div>
             </div>
         </div>

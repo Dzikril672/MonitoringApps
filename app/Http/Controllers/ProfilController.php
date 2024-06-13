@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Role;
 use App\Models\User;
 
@@ -12,12 +13,21 @@ class ProfilController extends Controller
     public function profil()
     {
         $user = Auth::user();
-        $role = null;
 
-        if ($user->role) {
-            $role = Role::find($user->role);
+        // Check if the user is authenticated
+        if (!$user) {
+            // Redirect to login page or show an error message
+            return redirect()->route('login')->with('error', 'You must be logged in to view your profile.');
         }
 
+        // Fetch the user's role information
+        $role = DB::table('users as u')
+            ->join('master_roles as mr', 'u.role', '=', 'mr.id_role')
+            ->select('mr.nama_role')
+            ->where('u.id', '=', $user->id)
+            ->first();
+
+        // Return the view with the user and role data
         return view('profil.profile', compact('user', 'role'));
     }
 
@@ -25,33 +35,29 @@ class ProfilController extends Controller
     {
         $user = Auth::user();
 
-        // Validasi input
+        // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        // Update profil pengguna
-        $user->name = $request->name;
-        $user->save();
+        // Update the user's name and role
+        DB::table('users')
+            ->where('id', $user->id)
+            ->update([
+                'name' => $request->name,
+            ]);
 
-        // Redirect ke halaman profil dengan pesan sukses
-        return redirect()->route('profil.profile')->with('success', 'Profile updated successfully.');
+        // Optionally, you can flash a success message
+        return redirect()->route('profil.editprofile')->with('success', 'Profile updated successfully.');
+
     }
 
     public function updateprofilview()
     {
         $user = Auth::user();
-        dd($user->role); // Uncomment this line to see the output
+        // $roles = DB::table('master_roles')->get();
 
-        // Load the 'role' relationship
-        $user->load('role');
-        $role = null;
-
-        if ($user->role) {
-            $role = Role::find($user->role);
-        }
-
-        return view('profil.editprofile', compact('user', 'role'));
+        return view('profil.editprofile', compact('user'));
     }
 
     public function changepass()

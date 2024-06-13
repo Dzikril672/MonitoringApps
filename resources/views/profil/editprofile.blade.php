@@ -23,17 +23,14 @@
 <div class="section mt-3">
     <form method="POST" action="{{ route('updateprofil') }}">
         @csrf
+        @method('PUT')
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" value="{{ $user->name }}" class="form-control">
         </div>
         <div class="form-group">
             <label for="role">Jabatan</label>
-            @if ($role)
-                <input type="text" id="role" name="role" value="{{ $role->name_role }}" class="form-control" readonly>
-            @else
-                <input type="text" id="role" name="role" value="No Role Assigned" class="form-control" readonly>
-            @endif
+            <input type="text" id="role" name="role" value="No Role Assigned" class="form-control" readonly>
         </div>
         <button type="submit" class="btn btn-primary">Update Profile</button>
         <a href="{{ route('profil.profile') }}" class="btn btn-secondary">Back</a>
