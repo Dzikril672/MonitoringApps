@@ -18,6 +18,12 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class, 'id_role', 'role');
+        return $this->hasMany(User::class, 'role', 'id_role');
+    }
+    public function getRoleName($idrole)
+    {
+        $role = self::where('id_role', $idrole)->first();
+
+        return $role ? $role->name_role : "Role not found";
     }
 }

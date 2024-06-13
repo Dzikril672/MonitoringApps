@@ -42,10 +42,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', [DashboardController::class, 'home']);
 Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
-Route::get('/profil', [ProfilController::class, 'profil']);
+Route::get('/profil', [ProfilController::class, 'profil'])->name('profil.profile');
 Route::get('/timeline', [MonitoringController::class, 'timeline']);
-Route::get('/updateprofil', [ProfilController::class,'updateprofil']);
-Route::get('/changepassword', [ProfilController::class,'changepass']);
-Route::post('/updateprofil', [ProfilController::class, 'updateProfil'])->name('updateprofil');
+Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
+Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
+Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
+Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
+
 
 // Route::get('/test', [MonitoringController::class, 'index']);
