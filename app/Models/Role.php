@@ -20,10 +20,4 @@ class Role extends Model
     {
         return $this->hasMany(User::class, 'role', 'id_role');
     }
-    public function getRoleName($idrole)
-    {
-        $role = self::where('id_role', $idrole)->first();
-
-        return $role ? $role->name_role : "Role not found";
-    }
 }
