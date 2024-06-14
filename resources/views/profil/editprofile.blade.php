@@ -29,6 +29,10 @@
             <input type="text" id="name" name="name" value="{{ $user->name }}" class="form-control">
         </div>
         <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="{{ $user->email }}" class="form-control">
+        </div>
+        <div class="form-group">
             <label for="role">Jabatan</label>
             <input type="text" id="role" name="role" value="No Role Assigned" class="form-control" readonly>
         </div>

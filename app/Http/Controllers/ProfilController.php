@@ -45,6 +45,7 @@ class ProfilController extends Controller
             ->where('id', $user->id)
             ->update([
                 'name' => $request->name,
+                'email' => $request->email,
             ]);
 
         // Optionally, you can flash a success message
