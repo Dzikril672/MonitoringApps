@@ -47,7 +47,7 @@ class DashboardController extends Controller
 
         $lppBelumSelesai = $totalLayanan - $lppSelesai;
 
-        // dd($lppBelumSelesai);
+        // dd($lppDdanger);
         
         return view('dashboard.dashboard', get_defined_vars());
     }

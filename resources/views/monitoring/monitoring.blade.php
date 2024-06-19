@@ -1,5 +1,10 @@
 @extends('layouts.master')
 
+<style>
+    .btnActionTimeline:hover {
+        font-weight: 800;
+    }
+</style>
 
 
 @section('header')
@@ -88,189 +93,13 @@
 @section('content')
     <!-- Body  -->
 
-    <div class="section" id="presence-section2" style="margin-top: 250px;">
+    <div class="section" id="presence-section2" style="margin-top: 270px;">
         <div class="tab-content" style="margin-bottom:100px;">
             @foreach($namaBulanTab as $index => $month)
                 <div class="tab-pane fade @if($index == $bulanIni-1) show active @endif" name="" id="{{ strtolower($month) }}" role="tabpanel">
                     <ul class="listview image-listview">
                         <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" class="digi">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" style="color:black;">
-                                <div class="item">
-                                    <div class="in">
-                                        <div>
-                                            <b>DIGIPROC</b>
-                                            <br>
-                                            <small class="text-muted">Proses telah selesai</small>
-                                        </div>
-                                            <span class="badge bg-success">Selesai</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="listview image-listview">
-                        <li>
-                            <a href="/timeline" style="color:black;">
+                            <a href="#" id="listCard" class="digi">
                                 <div class="item">
                                     <div class="in">
                                         <div>
@@ -288,6 +117,41 @@
             @endforeach
         </div>
     </div>
-    
-@endsection
+@endsection 
+
+<!-- Modal edit data Departemen -->
+<div class="modal modal-blur fade" id="modal-timeline" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modalTimelineLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTimelineLabel">Timeline</h5>   
+                <button type="button" onClick="window.location.reload();" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="py-2">
+                    <h2 class="font-weight-light text-center text-muted py-3" id="judulTimeline"></h2>
+                </div>
+                <div id="">
+                    <ul class="timeline" id="loadTimeline">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="bulantahun" id="bulantahun" value="{{date('Y-m', strtotime(date('Y-m-d') . '- 1 month' ))}}">
+
+@push('myscript')
+    <script>
+        $(function(){
+            $('#listCard').on('click', '.btnActionTimeline', function () {
+                $("#modal-timeline").modal("show");
+            });
+        });
+    </script>
+@endpush
 
