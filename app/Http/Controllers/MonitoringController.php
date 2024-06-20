@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User as ModelsUser;
+use app\Helpers\Prosess;
 use Exception;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
@@ -36,6 +37,39 @@ class MonitoringController extends Controller
 
     public function timeline(){
         return view('monitoring.timeline');
+    }
+
+    public function get_dashboard_lpp(Request $request)
+    {
+        $prosess = new Prosess();
+        $data = $prosess->get_dashboard_lpp();
+
+        return response()->json([
+            'pesan' => 'SUCCESS',
+            'data' => $data
+        ]);
+    }
+    // END AJAX 
+    public function get_timeline(Request $request)
+    {
+        $prosess = new Prosess();
+        $data = $prosess->get_timeline($request);
+
+        return response()->json([
+            'pesan' => 'SUCCESS',
+            'data' => $data
+        ]);
+    }
+
+    public function get_lpp_bulanan(Request $request)
+    {
+        $prosess = new Prosess();
+        $data = $prosess->get_lpp_bulanan($request);
+
+        return response()->json([
+            'pesan' => 'SUCCESS',
+            'data' => $data
+        ]);
     }
 
     // public function index() {
