@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('header')
+
     <!-- App Header -->
     <div class="appHeader bg-primary text-light">
         <div class="pageTitle">Change Password</div>
@@ -17,19 +17,13 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="section" style="margin-top: 50px;" id="change-password-section">
-    <div class="container">
-        <div class="change-password-page">
-            <form>
-                <div class="form-group">
-                    <label for="current_password">Current Password:</label>
                     <input type="password" id="current_password" name="current_password" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="new_password">New Password:</label>
                     <input type="password" id="new_password" name="new_password" class="form-control">
+            <div class="container">
                 </div>
                 <div class="form-group">
                     <label for="confirm_password">Confirm Password:</label>
@@ -42,4 +36,3 @@
     </div>
 </div>
 
-@endsection

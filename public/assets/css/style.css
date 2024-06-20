@@ -8082,7 +8082,7 @@ body.dark-mode-active .cart-item .cart-item-footer {
 
 #user-section-second {
   height: 150px;
-  background-color: #F178B6;
+  background-color: #fff;
   padding: 20px;
 }
 
@@ -8105,7 +8105,7 @@ body.dark-mode-active .cart-item .cart-item-footer {
 }
 #user-role {
   color: white;
-}
+} 
 
 #menu-section {
   position: absolute;
