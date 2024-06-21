@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TimelineLpp extends Model
 {
     use HasFactory;
-    protected $table = 'db_timeline_lpp';
+    protected $table = 'db_timeline_bapp';
     protected $guarded = ['id'];
     public $timestamps = true;
 

@@ -112,18 +112,18 @@ class Component
     function tgl_indo($tanggal)
     {
         $bulan = array(
-            1 => 'Januari',
-            'Februari',
-            'Maret',
-            'April',
+            1 => 'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
             'Mei',
-            'Juni',
-            'Juli',
-            'Agustus',
-            'September',
-            'Oktober',
-            'November',
-            'Desember'
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Okt',
+            'Nov',
+            'Des'
         );
         return $bulan[$tanggal];
     }
