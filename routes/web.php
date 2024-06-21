@@ -48,6 +48,7 @@ Route::get('/timeline', [MonitoringController::class, 'timeline']);
 Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
 Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
 Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
+Route::post('/change-password', [ProfilController::class, 'changePassword'])->name('password.change');
 Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
 // Route::get('belumselesai', [DashboardController::class, 'home']);
 Route::get('/search-belumselesai', [DashboardController::class, 'searchBelumSelesai']);
