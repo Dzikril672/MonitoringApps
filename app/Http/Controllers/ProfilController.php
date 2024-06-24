@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
 
 class ProfilController extends Controller
 {
@@ -50,7 +52,7 @@ class ProfilController extends Controller
             ]);
 
         // Optionally, you can flash a success message
-        return redirect()->route('profil.editprofile')->with('success', 'Profile updated successfully.');
+        return redirect()->route('profil.profile')->with('success', 'Profile updated successfully.');
 
     }
 
@@ -64,29 +66,82 @@ class ProfilController extends Controller
 
     public function changepass()
     {
-        return view('profil.changepassword');
-    }
-
-    public function updatepassword(Request $request)
-    {
         $user = Auth::user();
 
-        $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
-
-        // Check if the current password matches the user's password
-        if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'The current password is incorrect.'])->withInput();
-        }
-
-        // Update the user's password
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-
-        return redirect()->route('profil.changepass')->with('success', 'Password changed successfully.');
+        return view('profil.changepassword', compact('user'));
     }
+
+    public function updatepassword(Request $request){
+        $user = Auth::user();
+    Log::info('User:', ['id' => $user->id]);
+
+    $request->validate([
+        'current_password' => 'required|string',
+        'new_password' => 'required|string|min:8|confirmed',
+    ]);
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        Log::error('Current password mismatch');
+        return back()->withErrors(['current_password' => 'Password saat ini salah.'])->withInput();
+    }
+
+    Log::info('Current password match');
+
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    Log::info('Password updated');
+
+    return redirect()->route('profile')->with('success', 'Password berhasil diubah.');
+    }
+//     {
+//         $user = Auth::user();
+//         $current_password = $request->current_password;
+//         $new_password = Hash::make($request->new_password);
+//         $confirm_password = $request->confirm_password;
+
+//         $change_password= User::select('password')->where('id', $user->id)->first();
+
+//         if(empty($request->current_password && $request->new_password && $request->confirm_password )) {
+//             if($change_password == $current_password){
+//                 if ($confirm_password == $new_password) {
+//                     $update = User::where('id', $user->id)->update(['password' => $new_password]);
+//                     if($update){
+//                         return Redirect::back()->with(['success' => 'Password Berhasil Diubah']);
+//                     } else {
+//                         return Redirect::back()->with(['error' => 'Password Gagal Diubah']);
+//                     }
+//                 } else {
+//                     return Redirect::back()->with(['warning','New Password dan Confirm Tidak Sama']);
+//                 }
+//             } else {
+//                 return Redirect::back()->with(['warning','Password Salah']);
+//             }
+//         } else {
+//             return Redirect::back()->with(['warning', 'Harap Mengisi Semua Field']);
+//         }
+//         // dd($change_password);
+
+//         // // Memastikan pengguna terautentikasi
+//         // $user = Auth::user();
+
+//         // // Validasi input
+//         // $request->validate([
+//         //     'current_password' => 'required',
+//         //     'new_password' => 'required|string|min:8|confirmed',
+//         // ]);
+
+//         // // Periksa apakah password saat ini cocok dengan password pengguna
+//         // if (!Hash::check($request->current_password, $user->password)) {
+//         //     return back()->withErrors(['current_password' => 'Password saat ini salah.'])->withInput();
+//         // }
+
+//         // // Update password pengguna
+//         // $user->password = Hash::make($request->new_password);
+//         // $user->save();
+
+//         // return redirect()->route('profil.profile')->with('success', 'Password berhasil diubah.');
+//     }
 
     public function logout(Request $request)
     {
@@ -96,4 +151,5 @@ class ProfilController extends Controller
 
         return redirect('/');
     }
+
 }

@@ -46,9 +46,12 @@ Route::get('/profil', [ProfilController::class, 'profil'])->name('profil.profile
 Route::get('/timeline', [MonitoringController::class, 'timeline']);
 Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
 Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
-Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
-Route::post('/updatepassword', [ProfilController::class, 'updatepassword'])->name('updatepassword');
 Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
+    Route::post('/changepassword', [ProfilController::class, 'updatepassword'])->name('updatepassword');
+});
 
 
 // Route::get('/test', [MonitoringController::class, 'index']);
