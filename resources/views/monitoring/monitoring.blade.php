@@ -62,6 +62,7 @@
             <div class="row mt-1">
                 <div class="col">
                     <form action="#" method="GET">
+                        @csrf
                         <div class="row">
                             <div class="col-8">
                                 <div class="form-group">

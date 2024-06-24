@@ -11,7 +11,7 @@ class Prosess{
     {
         $Layanan = LayananAplikasi::where(['is_active' => 1])->OrderBy('nama_layanan', 'ASC')->get();
 
-
+        
         $data = [];
         foreach ($Layanan as $l) {
             $Until = new Component();
@@ -81,9 +81,6 @@ class Prosess{
         }
         $data = [];
         foreach ($Layanan as $l) {
-
-
-
 
             $jan = InputLppLayanan::where(['is_active' => 1, 'layanan_id' => $l->id, 'tahun' => $tahun, 'bulan' => 1])->with('status')->OrderBy('id', 'DESC')->first();
             $feb = InputLppLayanan::where(['is_active' => 1, 'layanan_id' => $l->id, 'tahun' => $tahun, 'bulan' => 2])->with('status')->OrderBy('id', 'DESC')->first();

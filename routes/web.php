@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TimelineController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,10 @@ Route::get('/timeline', [MonitoringController::class, 'timeline']);
 Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
 Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
 Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
+// Route::get('belumselesai', [DashboardController::class, 'home']);
+Route::get('/search-belumselesai', [DashboardController::class, 'searchBelumSelesai']);
+Route::get('/search-berjalan', [DashboardController::class, 'searchBerjalan']);
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
@@ -55,3 +60,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Route::get('/test', [MonitoringController::class, 'index']);
+Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');

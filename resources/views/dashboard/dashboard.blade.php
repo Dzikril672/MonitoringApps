@@ -70,17 +70,20 @@
 
         <div class="presencetab mt-2">
 
-            <!-- tablist panel -->
             <div class="tab-pane fade show active" id="pilled" role="tabpanel">
                 <ul class="nav nav-tabs style1" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#belumselesai" role="tab">
+                    <li class="nav-item" style="position: relative;">
+                        <a class="nav-link active" data-toggle="tab" href="#belumselesai" role="tab" style="position: relative;">
                             Belum Selesai
+                            <span class="badge bg-danger" style="position: absolute; top: 3px; right: 10px; 
+                                    font-size: smaller; z-index:999;">{{ $jumlahLppBelum }}</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#bulanberjalan" role="tab">
+                    <li class="nav-item" style="position: relative;">
+                        <a class="nav-link" data-toggle="tab" href="#bulanberjalan" role="tab" style="position: relative;">
                             Bulan Berjalan
+                            <span class="badge bg-danger" style="position: absolute; top: 3px; right: 10px; 
+                                    font-size: smaller; z-index:999;">{{ $jumlahLppBerjalan }}</span>
                         </a>
                     </li>
                 </ul>
@@ -89,52 +92,179 @@
             <div class="tab-content mt-2" style="margin-bottom:100px;">
                 <!-- tab belum selesai -->
                 <div class="tab-pane fade show active" id="belumselesai" role="tabpanel">
-                    @if(count($lppDdanger) > 0)
-                        @foreach($lppDdanger as $key => $d)
-                            <ul class="listview image-listview">
-                                <li>
-                                    <div class="item">
-                                        <div class="in">
-                                            <div>
-                                                <b>{{$d['aplikasi']['nama_layanan']}}</b>
-                                                <br>
-                                                <small class="text-muted">{{$d['status']['status_out_tw']}}</small>
-                                            </div>
-                                                <span class="badge bg-belum">{{$comp->tgl_indo($d->bulan) }} {{$d->tahun}}</span>
+                    <div class="row mt-1">
+                        <div class="col">
+                            <form id="searchFormBelum" method="GET">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <input type="text" name="cariBelum" id="cariBelum" class="form-control" 
+                                                placeholder="Cari Layanan" value="{{Request('cariBelum')}}">
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                        @endforeach
-                    @else
-                        <div style="text-align: center;"> Semua Layanan Telah Selesai </div>
-                    @endif
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <ion-icon name="search-outline"></ion-icon>
+                                                cari
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="resultContainerBelum">
+                        @if(count($lppDdanger) > 0)
+                            @foreach($lppDdanger as $key => $d)
+                                <ul class="listview image-listview">
+                                    <li>
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>{{ $d['aplikasi']['nama_layanan'] }}</b>
+                                                    <br>
+                                                    <small class="text-muted">{{ $d['status']['status_out_tw'] }}</small>
+                                                </div>
+                                                <span class="badge bg-belum">{{ $comp->tgl_indo($d->bulan) }} {{ $d->tahun }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            @endforeach
+                        @else
+                            <div style="text-align: center;"> Semua Layanan Telah Selesai </div>
+                        @endif
+                    </div>
                 </div>
 
                 <!-- tab bulan berjalan  -->
                 <div class="tab-pane fade" id="bulanberjalan" role="tabpanel">
-                    @if(count($lppInfo) > 0)
-                        @foreach($lppInfo as $key => $i)
-                            <ul class="listview image-listview">
-                                <li>
-                                    <div class="item">
-                                        <div class="in">
-                                            <div>
-                                                <b>{{$i['aplikasi']['nama_layanan']}}</b>
-                                                <br>
-                                                <small class="text-muted">{{$i['status']['status_out_tw']}}</small>
-                                            </div>
-                                                <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                    <div class="row mt-1">
+                        <div class="col">
+                            <form id="searchFormBerjalan" method="GET">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <input type="text" name="cariBerjalan" id="cariBerjalan" class="form-control" 
+                                                placeholder="Cari Layanan" value="{{ Request('cariBerjalan') }}">
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
-                        @endforeach
-                    @else
-                        <div style="text-align: center;"> Tidak Ada Layanan Bulan ini </div>
-                    @endif
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <ion-icon name="search-outline"></ion-icon>
+                                                cari
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="resultContainerBerjalan">
+                        @if(count($lppInfo) > 0)
+                            @foreach($lppInfo as $key => $i)
+                                <ul class="listview image-listview">
+                                    <li>
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>{{$i['aplikasi']['nama_layanan']}}</b>
+                                                    <br>
+                                                    <small class="text-muted">{{$i['status']['status_out_tw']}}</small>
+                                                </div>
+                                                    <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            @endforeach
+                        @else
+                            <div style="text-align: center;"> Tidak Ada Layanan Bulan ini </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('myscript')
+
+<script>
+    $(document).ready(function() {
+        $('#cariBelum').on('keyup', function() {
+            let cariBelum = $(this).val();
+            
+            $.ajax({
+                url: '/search-belumselesai',
+                type: 'GET',
+                data: { cariBelum: cariBelum },
+                success: function(response) {
+                    $('#resultContainerBelum').html('');
+                    if (response.length > 0) {
+                        $.each(response, function(key, d) {
+                            let item = `
+                                <ul class="listview image-listview">
+                                    <li>
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>${d.aplikasi.nama_layanan}</b>
+                                                    <br>
+                                                    <small class="text-muted">${d.status.status_out_tw}</small>
+                                                </div>
+                                                <span class="badge bg-belum">{{ $comp->tgl_indo($d->bulan) }} {{ $d->tahun }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>`;
+                            $('#resultContainerBelum').append(item);
+                        });
+                    } else {
+                        $('#resultContainerBelum').html('<div style="text-align: center;">Layanan tidak ada</div>');
+                    }
+                }
+            });
+        });
+
+        $('#cariBerjalan').on('keyup', function() {
+            let cariBerjalan = $(this).val();
+            
+            $.ajax({
+                url: '/search-berjalan',
+                type: 'GET',
+                data: { cariBerjalan: cariBerjalan },
+                success: function(response) {
+                    $('#resultContainerBerjalan').html('');
+                    if (response.length > 0) {
+                        $.each(response, function(key, i) {
+                            let item = `
+                                <ul class="listview image-listview">
+                                    <li>
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>${i.aplikasi.nama_layanan}</b>
+                                                    <br>
+                                                    <small class="text-muted">${i.status.status_out_tw}</small>
+                                                </div>
+                                                <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>`;
+                            $('#resultContainerBerjalan').append(item);
+                        });
+                    } else {
+                        $('#resultContainerBerjalan').html('<div style="text-align: center;">Layanan tidak ada</div>');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+@endpush
