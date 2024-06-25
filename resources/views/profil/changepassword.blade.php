@@ -42,21 +42,29 @@
         <div class="section mt-3" id="presence-section">
             <div class="container mt-2">
                 <div class="change-password-page">
-                    <form>
+                    <form method="POST" action="{{ route('updatepassword') }}">
+                        @csrf
+
                         <div class="form-group">
                             <label for="current_password">Current Password:</label>
-                            <input type="password" id="current_password" name="current_password" class="form-control">
+                            <input type="password" id="current_password" name="current_password" class="form-control" required>
+                            @error('current_password')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="new_password">New Password:</label>
-                            <input type="password" id="new_password" name="new_password" class="form-control">
+                            <input type="password" id="new_password" name="new_password" class="form-control" required>
+                            @error('new_password')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="confirm_password">Confirm Password:</label>
-                            <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
                         </div>
                         <button type="submit" class="btn btn-primary">Change Password</button>
-                        <a href="/profil" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('profil.profile') }}" class="btn btn-secondary">Back</a>
                     </form>
                 </div>
             </div>

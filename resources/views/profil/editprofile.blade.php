@@ -47,7 +47,6 @@
         <div class="section mt-3" id="presence-section">
             <form method="POST" action="{{ route('updateprofil') }}">
                 @csrf
-                @method('PUT')
                 <div class="form-group mt-2">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" value="{{ $user->name }}" class="form-control">
