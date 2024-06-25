@@ -30,15 +30,49 @@ class TestController extends Controller
     public function index(Request $request)
     {
         $comp = new Component();
-        $prosess = new Prosess();
-        $data = $prosess->get_lpp_bulanan($request);
-        // $menu = $comp->get_menu();
-        // $passing = [
-        //     'title' => 'Dashboard',
-        //     'menu' => $menu,
-        // ];
+        $tahun = 2024;
 
-        dd($data);
+        $bulanArray = range(1, 12);
+        $dataBulan = [];
+
+        foreach ($bulanArray as $bulan) {
+            $dataBulan[$bulan] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
+                ->with('status', 'aplikasi')
+                ->OrderBy('id', 'DESC')
+                ->get();
+        }
+
+        // Akses data setiap bulan seperti ini:
+        // $jan = $dataBulan[1];
+        // $feb = $dataBulan[2];
+        // $mar = $dataBulan[3];
+        // $apr = $dataBulan[4];
+        // $mei = $dataBulan[5];
+        $jun = $dataBulan[6];
+        // $jul = $dataBulan[7];
+        // $aug = $dataBulan[8];
+        // $sep = $dataBulan[9];
+        // $okt = $dataBulan[10];
+        // $nov = $dataBulan[11];
+        // $des = $dataBulan[12];
+
+        // dd($jun);
+
+        $bulanIni = date("m") * 1; //mengambil data bulan berjalan agar dapat dibaca data nama bulan (dalam bentuk angka)
+        $tahunIni = date("Y");
+        $namaBulanTab = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "Mei",
+            "Jun",
+            "Jul",
+            "Agu",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Des"];
 
         $lppDdanger = InputLppLayanan::whereNotIn('status_id', [11])
             ->with(['aplikasi', 'status', 'user_created', 'user_updated'])
@@ -58,6 +92,7 @@ class TestController extends Controller
         $ratarataDiAtas = DB::table('RATA-RATA-DIATAS')->select(['AVG_SLA_TDKCAPAI'])->first();
         $ratarataDiBawah = number_format($ratarataDiBawah->AVG_SLA_TERCAPAI, 2);
         $ratarataDiAtas = number_format($ratarataDiAtas->AVG_SLA_TDKCAPAI, 2);
+
         return view('monitoring.test', get_defined_vars());
     }
 
@@ -95,17 +130,4 @@ class TestController extends Controller
             'data' => $data
         ]);
     }
-
-    // public function get_desc_sla(Request $request)
-    // {
-    //     $prosess = new Prosess();
-    //     $data = $prosess->get_desc_sla($request);
-
-    //     return response()->json([
-    //         'pesan' => 'SUCCESS',
-    //         'data' => $data
-    //     ]);
-    // }
-
-    // END AJAX 
 }

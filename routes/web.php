@@ -25,10 +25,10 @@ use Illuminate\Support\Facades\Route;
 
 //Session untuk login user mobile
 // Route::middleware(['guest:user']) -> group(function () {
-    Route::get('/', function () {
-        return view('auth.login');
-    })->name('login');
-    Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
+    // Route::get('/', function () {
+    //     return view('auth.login');
+    // })->name('login');
+    // Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
 // });
 
 // Route::middleware(['auth:user'])-> group(function () {
@@ -41,23 +41,26 @@ use Illuminate\Support\Facades\Route;
 //     // Route::get('/test', [MonitoringController::class, 'index']);
 // });
 
-Route::get('/dashboard', [DashboardController::class, 'home']);
-Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
+
+//session 
+Route::get('/', function (){ return view('auth.login');})->name('login');
+Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
+Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
+
+//profile
 Route::get('/profil', [ProfilController::class, 'profil'])->name('profil.profile');
-Route::get('/timeline', [MonitoringController::class, 'timeline']);
 Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
 Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
-Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
-// Route::get('belumselesai', [DashboardController::class, 'home']);
+Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
+Route::post('/change-password', [ProfilController::class, 'changePassword'])->name('password.change');
+
+//dashboard
+Route::get('/dashboard', [DashboardController::class, 'home']);
 Route::get('/search-belumselesai', [DashboardController::class, 'searchBelumSelesai']);
 Route::get('/search-berjalan', [DashboardController::class, 'searchBerjalan']);
 
+//Monitoring
+Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
-    Route::post('/changepassword', [ProfilController::class, 'updatepassword'])->name('updatepassword');
-});
-
-
-// Route::get('/test', [MonitoringController::class, 'index']);
+//Test
 Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');

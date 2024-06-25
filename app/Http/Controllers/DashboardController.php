@@ -35,6 +35,8 @@ class DashboardController extends Controller
         $lppDdanger = InputLppLayanan::whereNotIn('status_id', [11])
             ->with(['aplikasi', 'status', 'user_created', 'user_updated'])
             ->orderBy('id', 'DESC')->get();
+
+        // dd($lppDdanger);
     
         $jumlahLppBelum = InputLppLayanan::whereNotIn('status_id', [11])
             ->with(['aplikasi', 'status', 'user_created', 'user_updated'])

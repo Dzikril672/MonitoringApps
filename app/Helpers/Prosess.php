@@ -79,6 +79,7 @@ class Prosess{
         } else {
             $tahun = date('Y');
         }
+        
         $data = [];
         foreach ($Layanan as $l) {
 

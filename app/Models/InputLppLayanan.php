@@ -47,8 +47,8 @@ class InputLppLayanan extends Model
         return $this->belongsTo(Status::class, 'status_id', 'kode_status');
     }
 
-    // public function tracking()
-    // {
-    //     return $this->hasMany(TimelineLpp::class, 'slug', 'slug')->where('is_active', '=', 1);
-    // }
+    public function tracking()
+    {
+        return $this->hasMany(TimelineLpp::class, 'slug', 'slug')->where('is_active', '=', 1);
+    }
 }

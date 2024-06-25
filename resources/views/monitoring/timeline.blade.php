@@ -1,7 +1,5 @@
-@extends('layouts.master')
 
-@section('content')
-    <div class="section full mt-2">
+    <div class="section full mt-2" id="">
         <div class="wide-block">
             <!-- timeline -->
             <div class="timeline timed">
@@ -46,4 +44,4 @@
             <!-- * timeline -->
         </div>
     </div>
-@endsection
+
