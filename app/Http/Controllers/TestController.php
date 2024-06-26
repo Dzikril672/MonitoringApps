@@ -31,6 +31,7 @@ class TestController extends Controller
     {
         $comp = new Component();
         $tahun = 2024;
+        
 
         $bulanArray = range(1, 12);
         $dataBulan = [];
@@ -41,6 +42,13 @@ class TestController extends Controller
                 ->OrderBy('id', 'DESC')
                 ->get();
         }
+
+        $prosess = new Prosess();
+        // $data = $prosess->get_lpp_bulanan($request);
+        $data = $prosess->get_timeline($request);
+
+
+        dd($data);
 
         // Akses data setiap bulan seperti ini:
         // $jan = $dataBulan[1];
@@ -124,6 +132,8 @@ class TestController extends Controller
     {
         $prosess = new Prosess();
         $data = $prosess->get_lpp_bulanan($request);
+
+        dd($data);
 
         return response()->json([
             'pesan' => 'SUCCESS',

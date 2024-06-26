@@ -71,7 +71,7 @@ class ProfilController extends Controller
         return view('profil.changepassword', compact('user'));
     }
 
-    public function updatepassword(Request $request){
+    public function changePassword(Request $request){
 
         $request->validate([
             'password' => 'required',

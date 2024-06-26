@@ -64,3 +64,4 @@ Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
 
 //Test
 Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
+
