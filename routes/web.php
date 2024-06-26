@@ -19,49 +19,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
-
-//Session untuk login user mobile
-// Route::middleware(['guest:user']) -> group(function () {
-    // Route::get('/', function () {
-    //     return view('auth.login');
-    // })->name('login');
-    // Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
-// });
-
-// Route::middleware(['auth:user'])-> group(function () {
-
-//     Route::get('/dashboard', [DashboardController::class, 'home']);
-//     Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
-//     Route::get('/profil', [ProfilController::class, 'profil']);
-//     Route::get('/timeline', [MonitoringController::class, 'timeline']);
-//     Route::get('/updateprofil', [UpdateController::class,'updateprofil']);
-//     // Route::get('/test', [MonitoringController::class, 'index']);
-// });
-
-
 //session 
-Route::get('/', function (){ return view('auth.login');})->name('login');
-Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
-Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
+// Route::get('/', function (){ return view('auth.login');})->name('login');
+// Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
 
-//profile
-Route::get('/profil', [ProfilController::class, 'profil'])->name('profil.profile');
-Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
-Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
-Route::get('/changepassword', [ProfilController::class,'changepass'])->name('changepassword');
-Route::post('/change-password', [ProfilController::class, 'changePassword'])->name('password.change');
+// Route untuk user yang belum login (Guest)
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', function () {
+        return view('auth.login');
+    })->name('login'); // Perhatikan nama route 'login', pastikan tidak bertabrakan dengan default
 
-//dashboard
-Route::get('/dashboard', [DashboardController::class, 'home']);
-Route::get('/search-belumselesai', [DashboardController::class, 'searchBelumSelesai']);
-Route::get('/search-berjalan', [DashboardController::class, 'searchBerjalan']);
+    Route::post('/loginMobile', [AuthController::class, 'loginMobile'])->name('login.mobile');
+});
 
-//Monitoring
-Route::get('/monitoring', [MonitoringController::class, 'monitoring']);
+// Route untuk user yang sudah login (Authenticated)
+Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', [ProfilController::class, 'logout'])->name('logout');
+    
+    // Profil
+    Route::get('/profil', [ProfilController::class, 'profil'])->name('profil.profile');
+    Route::get('/updateprofil', [ProfilController::class, 'updateprofilview'])->name('updateprofil.view');
+    Route::post('/updateprofil', [ProfilController::class, 'updateprofil'])->name('updateprofil');
+    Route::get('/changepassword', [ProfilController::class, 'changepass'])->name('changepassword');
+    Route::post('/change-password', [ProfilController::class, 'changePassword'])->name('password.change');
+    
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
+    Route::get('/search-belumselesai', [DashboardController::class, 'searchBelumSelesai'])->name('search.belumselesai');
+    Route::get('/search-berjalan', [DashboardController::class, 'searchBerjalan'])->name('search.berjalan');
+    
+    // Monitoring
+    Route::get('/monitoring', [MonitoringController::class, 'monitoring'])->name('monitoring');
+    
+    // Test
+    Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
+    Route::get('/get-dashboard-lpp', [TestController::class, 'getDashboardLpp'])->name('get_dashboard_lpp');
+    Route::get('/getmonitoring', [TestController::class, 'index'])->name('monitoring.index');
+});
 
-//Test
-Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
+
 

@@ -57,7 +57,7 @@
 
             <div class="row mt-1">
                 <div class="col">
-                    <form action="#" method="GET">
+                    <form id="searchForm" action="{{ route('monitoring.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-8">
@@ -170,7 +170,7 @@
                                 <div class="item">
                                     <span class="time">06:00 PM</span>
                                     <div class="dot bg-info"></div>
-                                    <div class="content">
+                                    <div class="content">           
                                         <h4 class="title">New Release</h4>
                                         <div class="text">Export the version 2.3</div>
                                     </div>
@@ -197,10 +197,7 @@
             $(document).on('click', '#listCard', function() {
                 $("#modal-timeline").modal("show");
             });
-            $('button[type="submit"]').click(function(event) {
-                event.preventDefault(); // Mencegah form submit
-                alert();
-            });
+            
         });
     </script>
 @endpush

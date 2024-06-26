@@ -37,7 +37,7 @@
         <div class="todaypresence">
             <div class="row">
                 <div class="col-6">
-                    <div style="min-height:100px" class="card radius-10 border-start border-0 border-3 border-info bg-gradient-scooter-pink">
+                    <div style="height:100%" class="card radius-10 border-start border-0 border-3 border-info bg-gradient-scooter-pink">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div>
@@ -50,7 +50,7 @@
                 </div>
                 
                 <div class="col-6">
-                    <div style="min-height:100px" class="card radius-10 border-start border-0 border-3 border-info bg-gradient-scooter">
+                    <div style="height:100%" class="card radius-10 border-start border-0 border-3 border-info bg-gradient-scooter">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div>
@@ -69,7 +69,6 @@
         </div>
 
         <div class="presencetab mt-2">
-
             <div class="tab-pane fade show active" id="pilled" role="tabpanel">
                 <ul class="nav nav-tabs style1" role="tablist">
                     <li class="nav-item" style="position: relative;">

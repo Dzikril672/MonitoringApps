@@ -24,24 +24,30 @@ class TestController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
         $comp = new Component();
-        $tahun = 2024;
-        
+        $tahun = $request->input('tahun', date('Y'));
 
         $bulanArray = range(1, 12);
         $dataBulan = [];
 
-        foreach ($bulanArray as $bulan) {
-            $dataBulan[$bulan] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
-                ->with('status', 'aplikasi')
-                ->OrderBy('id', 'DESC')
-                ->get();
-        }
+        $request->merge(['slug' => '2023-04@apkt']);
+
+        $prosess = new Prosess();
+        $data = $prosess->get_timeline($request);
+
+        dd($data);
+
+        // foreach ($bulanArray as $bulan) {
+        //     $dataBulan[$bulan] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
+        //         ->with('status', 'aplikasi')
+        //         ->OrderBy('id', 'DESC')
+        //         ->get();
+        // }
 
         $prosess = new Prosess();
         // $data = $prosess->get_lpp_bulanan($request);
@@ -51,21 +57,10 @@ class TestController extends Controller
         dd($data);
 
         // Akses data setiap bulan seperti ini:
-        // $jan = $dataBulan[1];
-        // $feb = $dataBulan[2];
-        // $mar = $dataBulan[3];
-        // $apr = $dataBulan[4];
-        // $mei = $dataBulan[5];
-        $jun = $dataBulan[6];
-        // $jul = $dataBulan[7];
-        // $aug = $dataBulan[8];
-        // $sep = $dataBulan[9];
-        // $okt = $dataBulan[10];
-        // $nov = $dataBulan[11];
-        // $des = $dataBulan[12];
+        // $jun = $dataBulan[6];
 
         // dd($jun);
-
+        // $bulan2 = date('n');
         $bulanIni = date("m") * 1; //mengambil data bulan berjalan agar dapat dibaca data nama bulan (dalam bentuk angka)
         $tahunIni = date("Y");
         $namaBulanTab = [
@@ -81,41 +76,53 @@ class TestController extends Controller
             "Okt",
             "Nov",
             "Des"];
-
-        $lppDdanger = InputLppLayanan::whereNotIn('status_id', [11])
-            ->with(['aplikasi', 'status', 'user_created', 'user_updated'])
-            ->OrderBy('id', 'DESC')->get();
-
-        $lppInfo = InputLppLayanan::where([
-            'thbl' => date('Ym', strtotime(date('Y-m-d') . '- 1 month')),
-        ])->whereIn('status_id', [11])
-            ->with(['aplikasi', 'status', 'user_created', 'user_updated'])
-            ->OrderBy('id', 'DESC')->get();
-
-        $totalLayanan = LayananAplikasi::where(['is_active' => 1])->count();
-        $lppSelesai = InputLppLayanan::where(['thbl' => date('Ym', strtotime(date('Y-m-d') . '- 1 month'))])
-            ->whereIn('status_id', [11])->count();
-        $lppBelumSelesai = $totalLayanan - $lppSelesai;
-        $ratarataDiBawah = DB::table('RATA-RATA-DIBAWAH')->select(['AVG_SLA_TERCAPAI'])->first();
-        $ratarataDiAtas = DB::table('RATA-RATA-DIATAS')->select(['AVG_SLA_TDKCAPAI'])->first();
-        $ratarataDiBawah = number_format($ratarataDiBawah->AVG_SLA_TERCAPAI, 2);
-        $ratarataDiAtas = number_format($ratarataDiAtas->AVG_SLA_TDKCAPAI, 2);
+        
+            foreach ($bulanArray as $bulan) {
+                $query = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
+                                        ->with('status', 'aplikasi')
+                                        ->orderBy('id', 'DESC');
+        
+                // Filter berdasarkan kata kunci pencarian jika ada
+                if ($request->has('cari') && !empty($request->cari)) {
+                    $query->whereHas('aplikasi', function ($query) use ($request) {
+                        $query->where('nama_layanan', 'like', '%'.$request->cari.'%');
+                    });
+                }
+        
+                $dataBulan[$bulan] = $query->get();
+            }
+        
 
         return view('monitoring.test', get_defined_vars());
     }
 
+    public function getDashboardLpp(Request $request)
+    {
+        $tahun = $request->input('tahun');
+        $dataBulan = [];
+
+        for ($i = 1; $i <= 12; $i++) {
+            $dataBulan[$i] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $i])
+                ->with('status', 'aplikasi')
+                ->orderBy('id', 'DESC')
+                ->get();
+        }
+
+        return response()->json(['dataBulan' => $dataBulan]);
+    }
+
     // AJAX 
 
-    public function get_dashboard_lpp(Request $request)
-    {
-        $prosess = new Prosess();
-        $data = $prosess->get_dashboard_lpp();
+    // public function get_dashboard_lpp(Request $request)
+    // {
+    //     $prosess = new Prosess();
+    //     $data = $prosess->get_dashboard_lpp();
 
-        return response()->json([
-            'pesan' => 'SUCCESS',
-            'data' => $data
-        ]);
-    }
+    //     return response()->json([
+    //         'pesan' => 'SUCCESS',
+    //         'data' => $data
+    //     ]);
+    // }
     // END AJAX 
     public function get_timeline(Request $request)
     {

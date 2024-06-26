@@ -16,7 +16,7 @@ class MonitoringController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware('auth');
     }
 
     public function monitoring(){
@@ -56,17 +56,6 @@ class MonitoringController extends Controller
             "Des"];
 
         return view('monitoring.monitoring', get_defined_vars());
-    }
-
-    public function get_dashboard_lpp(Request $request)
-    {
-        $prosess = new Prosess();
-        $data = $prosess->get_dashboard_lpp();
-
-        return response()->json([
-            'pesan' => 'SUCCESS',
-            'data' => $data
-        ]);
     }
 
     // END AJAX 

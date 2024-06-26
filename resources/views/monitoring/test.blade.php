@@ -57,25 +57,26 @@
 
             <div class="row mt-1">
                 <div class="col">
-                    <form action="#" method="GET">
-                        @csrf
+                    <form id="searchForm" action="{{ route('monitoring.index') }}" method="GET">
+                        <!-- @csrf -->
                         <div class="row">
                             <div class="col-8">
                                 <div class="form-group">
-                                    <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari Layanan" value="">
+                                    <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari Layanan" value="{{ request('cari') }}">
                                 </div>
                             </div>
 
                             <div class="col-4">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary w-100">
+                                    <button type="submit" id="submitSearch" class="btn btn-primary w-100">
                                         <ion-icon name="search-outline"></ion-icon>
-                                        cari
+                                        Cari
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
 
@@ -170,7 +171,7 @@
                                 <div class="item">
                                     <span class="time">06:00 PM</span>
                                     <div class="dot bg-info"></div>
-                                    <div class="content">
+                                    <div class="content">           
                                         <h4 class="title">New Release</h4>
                                         <div class="text">Export the version 2.3</div>
                                     </div>
@@ -192,15 +193,15 @@
 
 @push('myscript')
     <script>
-        $(document).ready(function(){
-            // Menambahkan event click handler untuk elemen dengan id listCard
-            $(document).on('click', '#listCard', function() {
-                $("#modal-timeline").modal("show");
-            });
-            $('button[type="submit"]').click(function(event) {
-                event.preventDefault(); // Mencegah form submit
-                alert();
+        $(document).ready(function() {
+            $('#tahun').on('change', function() {
+                var tahunSelected = $(this).val();
+                alert('Anda memilih tahun: ' + tahunSelected);
+                // Atau melakukan aksi lainnya, misalnya mengirim permintaan Ajax untuk memperbarui konten berdasarkan tahun yang dipilih
             });
         });
     </script>
 @endpush
+
+
+
