@@ -77,27 +77,27 @@ class ProfilController extends Controller
     }
 
     public function updatepassword(Request $request){
-        $user = Auth::user();
-    Log::info('User:', ['id' => $user->id]);
 
-    $request->validate([
-        'current_password' => 'required|string',
-        'new_password' => 'required|string|min:8|confirmed',
-    ]);
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+            'new_password_confirmation' => 'required'
+        ]);
+        
 
-    if (!Hash::check($request->current_password, $user->password)) {
-        Log::error('Current password mismatch');
-        return back()->withErrors(['current_password' => 'Password saat ini salah.'])->withInput();
-    }
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            return back()->with('error','old password not match with your current password');
+        }
 
-    Log::info('Current password match');
+        if ($request->new_password != $request->confirm_password) {
+            return back()->with('error','new password and confirm password not match');
+        }
 
-    $user->password = Hash::make($request->new_password);
-    $user->save();
+        auth()->user()->update([
+            'password' => Hash::make($request->new_password),
+        ]);
 
-    Log::info('Password updated');
-
-    return redirect()->route('profile')->with('success', 'Password berhasil diubah.');
+        return back()->with('success','change password was successfully');
     }
 //     {
 //         $user = Auth::user();

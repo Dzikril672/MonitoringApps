@@ -4,6 +4,7 @@
     <!-- Bootstrap-->
     <script src="{{asset('assets/js/lib/popper.min.js')}}"></script>
     <script src="{{asset('assets/js/lib/bootstrap.min.js')}}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
