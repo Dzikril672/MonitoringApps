@@ -40,7 +40,7 @@ class TestController extends Controller
         $prosess = new Prosess();
         $data = $prosess->get_timeline($request);
 
-        dd($data);
+        // dd($data);
 
         // foreach ($bulanArray as $bulan) {
         //     $dataBulan[$bulan] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
@@ -54,7 +54,7 @@ class TestController extends Controller
         $data = $prosess->get_timeline($request);
 
 
-        dd($data);
+        // dd($data);
 
         // Akses data setiap bulan seperti ini:
         // $jun = $dataBulan[6];

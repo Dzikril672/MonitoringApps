@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
     Route::get('/get-dashboard-lpp', [TestController::class, 'getDashboardLpp'])->name('get_dashboard_lpp');
     Route::get('/getmonitoring', [TestController::class, 'index'])->name('monitoring.index');
+    Route::get('/get-timeline', [TestController::class,'get_timeline'])->name('get_timeline');
+    Route::post('/get-timeline', [TestController::class,'get_timeline'])->name('get_timeline');
 });
 
 
