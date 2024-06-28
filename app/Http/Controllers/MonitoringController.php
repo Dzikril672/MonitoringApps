@@ -19,25 +19,27 @@ class MonitoringController extends Controller
         $this->middleware('auth');
     }
 
-    public function monitoring(){
-        $users = User::all();
+    public function monitoring(Request $request){
         $comp = new Component();
-        $tahun = 2024;
+        $tahun = $request->input('pilih-tahun', date('Y'));
 
         $bulanArray = range(1, 12);
         $dataBulan = [];
 
         foreach ($bulanArray as $bulan) {
-            $dataBulan[$bulan] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
-                ->with('status', 'aplikasi')
-                ->OrderBy('id', 'DESC')
-                ->get();
+            $query = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $bulan])
+                                    ->with('status', 'aplikasi')
+                                    ->orderBy('id', 'DESC');
+    
+            // Filter berdasarkan kata kunci pencarian jika ada
+            if ($request->has('cari') && !empty($request->cari)) {
+                $query->whereHas('aplikasi', function ($query) use ($request) {
+                    $query->where('nama_layanan', 'like', '%'.$request->cari.'%');
+                });
+            }
+    
+            $dataBulan[$bulan] = $query->get();
         }
-
-        // Akses data setiap bulan seperti ini:
-        // $jan = $dataBulan[1];
-
-        // dd($users);
 
         $bulanIni = date("m") * 1; //mengambil data bulan berjalan agar dapat dibaca data nama bulan (dalam bentuk angka)
         $tahunIni = date("Y");
@@ -55,20 +57,25 @@ class MonitoringController extends Controller
             "Nov",
             "Des"];
 
+        // Akses data setiap bulan seperti ini:
+        // $jan = $dataBulan[1];
+
+        // dd($users);
+
         return view('monitoring.monitoring', get_defined_vars());
     }
 
     // END AJAX 
-    // public function get_timeline(Request $request)
-    // {
-    //     $prosess = new Prosess();
-    //     $data = $prosess->get_timeline($request);
+    public function get_timeline(Request $request)
+    {
+        $prosess = new Prosess();
+        $data = $prosess->get_timeline($request);
 
-    //     return response()->json([
-    //         'pesan' => 'SUCCESS',
-    //         'data' => $data
-    //     ]);
-    // }
+        return response()->json([
+            'pesan' => 'SUCCESS',
+            'data' => $data
+        ]);
+    }
 
     // public function get_lpp_bulanan(Request $request)
     // {

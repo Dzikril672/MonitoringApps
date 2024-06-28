@@ -10,7 +10,7 @@ class InputLppLayanan extends Model
 {
     
     use HasFactory;
-    protected $table = 'db_dashboard_lpp';
+    protected $table = 'db_dashboard_bapp';
     protected $guarded = ['id'];
     public $timestamps = true;
 

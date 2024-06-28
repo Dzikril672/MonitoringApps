@@ -1,11 +1,5 @@
 @extends('layouts.master')
 
-<style>
-    .btnActionTimeline:hover {
-        font-weight: 800;
-    }
-</style>
-
 @section('header')
     <!-- App Header -->
     <div class="appHeader bg-primary">
@@ -15,17 +9,11 @@
     <div class="row appHeader bg-dasar" style="margin-top: 50px;">
         <div class="col">
             <div class="row mt-2">
-                <div class="col-9">
-                    <!-- <div class="form-group">
-                        <button type="submit" class="btn btn-primary w-100">
-                            <ion-icon name="search-outline"></ion-icon>
-                            Test
-                        </button>
-                    </div> -->
-                </div>
-                <div class="col-3">
-                    <div class="form-group">
-                        <select name="tahun" id="tahun" class="form-control">
+                <div class="col-6"></div>
+                <div class="col-6">   
+                    <div class="tahun-container">
+                        <label for="pilih-tahun" class="tahun-label">Tahun :</label>
+                        <select name="pilih-tahun" id="pilih-tahun" class="form-control" style="width:50%;">
                             <option style="text-align:right" value=""> Tahun </option>
                             @php
                                 $tahunAwal = 2010;
@@ -36,22 +24,21 @@
                             @endfor
                         </select>
                     </div>
+                    
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-12">
-                    <div class="form-group">
-                        <ul class="nav nav-tabs style1" role="tablist" id="myTab">
-                            @foreach($namaBulanTab as $index => $month)
-                                <li class="nav-item">
-                                    <a class="nav-link @if($index == $bulanIni-1) active @endif" data-toggle="tab" href="#{{ strtolower($month) }}" role="tab" aria-selected="@if($index == $bulanIni-1) true @else false @endif">
-                                        {{ $month }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <ul class="nav nav-tabs style1" role="tablist" id="myTab">
+                        @foreach($namaBulanTab as $index => $month)
+                            <li class="nav-item">
+                                <a class="nav-link @if($index == $bulanIni-1) active @endif" data-toggle="tab" href="#{{ strtolower($month) }}" role="tab" aria-selected="@if($index == $bulanIni-1) true @else false @endif">
+                                    {{ $month }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
 
@@ -59,20 +46,16 @@
                 <div class="col">
                     <form id="searchForm" action="{{ route('monitoring.index') }}" method="GET">
                         @csrf
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="form-group">
-                                    <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari Layanan" value="">
-                                </div>
+                        <div class="row mt-2">
+                            <div class="col-8" style="padding-left: 0px !important;">
+                                <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari Layanan" value="">
                             </div>
 
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        <ion-icon name="search-outline"></ion-icon>
-                                        cari
-                                    </button>
-                                </div>
+                            <div class="col-4" style="padding-right: 0px !important;">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <ion-icon name="search-outline"></ion-icon>
+                                    cari
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -86,14 +69,14 @@
 
 @section('content')
     <!-- Body  -->
-    <div class="section" id="presence-section2" style="margin-top: 270px;">
+    <div class="section" id="presence-section2" style="margin-top: 280px;">
         <div class="tab-content" style="margin-bottom:100px;">
             @foreach($namaBulanTab as $index => $month)
                 <div class="tab-pane fade @if($index == $bulanIni-1) show active @endif" id="{{ strtolower($month) }}" role="tabpanel">
                     @foreach($dataBulan[$index + 1] as $data)
                         <ul class="listview image-listview">
                             <li>
-                                <a href="#" id="listCard" class="digi">
+                                <a href="#" id="listCard" class="listCard digi" data-slug="{{$data -> slug}}">
                                     <div class="item">
                                         <div class="in">
                                             <div>
@@ -126,64 +109,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalTimelineLabel">Timeline</h5>   
-                <button type="button" onClick="window.location.reload();" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="py-2">
                     <h2 class="font-weight-light text-center text-muted py-3" id="judulTimeline"></h2>
                 </div>
-                <div id="">
-                    <!-- <ul class="timeline" id="loadTimeline"> -->   
-                    <div class="section full mt-2" id="">
-                        <div class="wide-block">
-                            <!-- timeline -->
-                            <div class="timeline timed">
-                                <div class="item">
-                                    <span class="time">11:00 AM</span>
-                                    <div class="dot"></div>
-                                    <div class="content">
-                                        <h4 class="title">Call Amanda</h4>
-                                        <div class="text">Talk about the project</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="time">1:30 PM</span>
-                                    <div class="dot bg-danger"></div>
-                                    <div class="content">
-                                        <h4 class="title">Meet up</h4>
-                                        <div class="text">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="time">04:40 PM</span>
-                                    <div class="dot bg-warning"></div>
-                                    <div class="content">
-                                        <h4 class="title">Party Night</h4>
-                                        <div class="text">Get a ticket for party at tonight 9:00 PM</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="time">06:00 PM</span>
-                                    <div class="dot bg-info"></div>
-                                    <div class="content">           
-                                        <h4 class="title">New Release</h4>
-                                        <div class="text">Export the version 2.3</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- * timeline -->
-                        </div>
-                    </div>
-                    <!-- </ul> -->
+                <div id="loadTimeline">
+                    
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
@@ -192,12 +128,112 @@
 
 @push('myscript')
     <script>
-        $(document).ready(function(){
-            // Menambahkan event click handler untuk elemen dengan id listCard
-            $(document).on('click', '#listCard', function() {
-                $("#modal-timeline").modal("show");
+        $(document).ready(function() {
+            $('#pilih-tahun').on('change', function() {
+                var tahunSelected = $(this).val();
+                $.ajax({
+                    url: '/monitoring',  // URL endpoint untuk mendapatkan data berdasarkan tahun
+                    type: 'GET',
+                    dataType: "json",
+                    data: { tahun: tahunSelected },
+                    success: function(response) {
+                        $('#resultCari').html('');
+                        if (response.length > 0) {
+                            $.each(response, function(key, data) {
+                                let item = `
+                                    <ul class="listview image-listview">
+                                        <li>
+                                            <a href="#" id="listCard" class="digi">
+                                                <div class="item">
+                                                    <div class="in">
+                                                        <div>
+                                                            <b>${data.nama_layanan}</b>
+                                                            <br>
+                                                            <small class="text-muted">${data.status_out_tw}</small>
+                                                        </div>
+                                                        <span class="badge ${data.status_out_tw == 'Selesai' ? "bg-udah" : "bg-belum"}">
+                                                            ${data.status_out_tw == 'Selesai' ? "Selesai" : "Proses"}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>`;
+                                $('#resultCari').append(item);
+                            });
+                        } else {
+                            $('#resultCari').html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                        $('#resultCari').html('<div style="text-align: center; color: red;">Terjadi kesalahan saat mengambil data. Silakan coba lagi.</div>');
+                    }
+                });
             });
-            
+        });
+
+        $(document).on('click', '.listCard', function (e) {
+            $('#closeModalButton').on('click', function () {
+                $('#modal-timeline').modal('hide');
+            });
+            e.preventDefault();
+            var slug = $(this).data('slug');
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: '/get-timeline',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    slug: slug
+                },
+                success: function (data) {
+                    if (data.pesan === 'SUCCESS') {
+                        var html = '';
+                        $('#judulTimeline').text("BAPP " + data.data.layanan.aplikasi.nama_layanan + " Periode " + data.data.layanan.bulan + " - " + data.data.layanan.tahun);
+                        $.each(data.data.timeline, function (index, value) {
+                            var act = index === 0 ? "event2" : "";
+                            var d1 = new Date(value.created_at);
+
+                            function formatDate(date) {
+                                var d = new Date(date),
+                                    month = '' + (d.getMonth() + 1),
+                                    day = '' + d.getDate(),
+                                    year = d.getFullYear();
+
+                                if (month.length < 2)
+                                    month = '0' + month;
+                                if (day.length < 2)
+                                    day = '0' + day;
+
+                                return [day, month, year].join('-');
+                            }
+
+                            var link = value.status.status_tw === 'Selesai'
+                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
+                                : "";
+
+                            var result2 = formatDate(d1);
+
+                            html += "<li class='event " + act + "' data-date='" + result2 + "'>" +
+                                "<h3>" + value.status.status_tw + "</h3>" +
+                                "<p>" + value.keterangan + " " + link + ".</p>" +
+                                "</li>";
+                        });
+                        $('#loadTimeline').html(html);
+                        $('#modal-timeline').modal('show');
+                    } else {
+                        alert("Gagal memuat data timeline.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + xhr.responseText;
+                    console.log(errorMessage);
+                    alert('Error - ' + errorMessage);
+                }
+            });
         });
     </script>
 @endpush

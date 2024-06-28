@@ -1,10 +1,5 @@
 @extends('layouts.master')
-
-<style>
-    .btnActionTimeline:hover {
-        font-weight: 800;
-    }
-</style>
+<link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
 
 @section('header')
     <!-- App Header -->
@@ -14,14 +9,10 @@
 
     <div class="row appHeader bg-dasar" style="margin-top: 50px;">
         <div class="col">
+            <!-- Your search and filter section -->
             <div class="row mt-2">
                 <div class="col-9">
-                    <!-- <div class="form-group">
-                        <button type="submit" class="btn btn-primary w-100">
-                            <ion-icon name="search-outline"></ion-icon>
-                            Test
-                        </button>
-                    </div> -->
+                    <!-- Omitted for brevity -->
                 </div>
                 <div class="col-3">
                     <div class="form-group">
@@ -39,6 +30,7 @@
                 </div>
             </div>
 
+            <!-- Tabs for months -->
             <div class="row">
                 <div class="col-12">
                     <div class="form-group">
@@ -55,17 +47,16 @@
                 </div>
             </div>
 
+            <!-- Search form -->
             <div class="row mt-1">
                 <div class="col">
                     <form id="searchForm" action="{{ route('monitoring.index') }}" method="GET">
-                        <!-- @csrf -->
                         <div class="row">
                             <div class="col-8">
                                 <div class="form-group">
                                     <input type="text" name="cari" id="cari" class="form-control" placeholder="Cari Layanan" value="{{ request('cari') }}">
                                 </div>
                             </div>
-
                             <div class="col-4">
                                 <div class="form-group">
                                     <button type="submit" id="submitSearch" class="btn btn-primary w-100">
@@ -76,7 +67,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
 
@@ -86,7 +76,7 @@
 @endsection
 
 @section('content')
-    <!-- Body  -->
+    <!-- Body -->
     <div class="section" id="presence-section2" style="margin-top: 270px;">
         <div class="tab-content" style="margin-bottom:100px;">
             @foreach($namaBulanTab as $index => $month)
@@ -94,7 +84,7 @@
                     @foreach($dataBulan[$index + 1] as $data)
                         <ul class="listview image-listview">
                             <li>
-                                <a href="#" id="listCard" class="digi">
+                                <a href="#" class="listCard" data-slug="{{ $data->slug }}">
                                     <div class="item">
                                         <div class="in">
                                             <div>
@@ -104,10 +94,10 @@
                                             </div>
                                             <span class="badge {{ $data->status->status_out_tw == 'Selesai' ? "bg-udah" : "bg-belum" }}">
                                                 @if($data->status->status_out_tw == 'Selesai')
-                                                    selesai
+                                                    Selesai
                                                 @else
                                                     Proses
-                                                @endif    
+                                                @endif
                                             </span>
                                         </div>
                                     </div>
@@ -119,89 +109,94 @@
             @endforeach
         </div>
     </div>
+    <!-- * Body -->
 @endsection
 
-<!-- Modal edit data Departemen -->
-<div class="modal modal-blur fade" id="modal-timeline" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modalTimelineLabel">
+<!-- Modal for Timeline -->
+<div class="modal modal-blur fade" id="modal-timeline" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTimelineLabel">Timeline</h5>   
-                <button type="button" onClick="window.location.reload();" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="modalTimelineLabel">Timeline</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="py-2">
                     <h2 class="font-weight-light text-center text-muted py-3" id="judulTimeline"></h2>
                 </div>
-                <div id="">
-                    <!-- <ul class="timeline" id="loadTimeline"> -->   
-                    <div class="section full mt-2" id="">
-                        <div class="wide-block">
-                            <!-- timeline -->
-                            <div class="timeline timed">
-                                <div class="item">
-                                    <span class="time">11:00 AM</span>
-                                    <div class="dot"></div>
-                                    <div class="content">
-                                        <h4 class="title">Call Amanda</h4>
-                                        <div class="text">Talk about the project</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="time">1:30 PM</span>
-                                    <div class="dot bg-danger"></div>
-                                    <div class="content">
-                                        <h4 class="title">Meet up</h4>
-                                        <div class="text">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                            <img src="assets/img/favicon.png" alt="avatar" class="imaged w24 rounded">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="time">04:40 PM</span>
-                                    <div class="dot bg-warning"></div>
-                                    <div class="content">
-                                        <h4 class="title">Party Night</h4>
-                                        <div class="text">Get a ticket for party at tonight 9:00 PM</div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <span class="time">06:00 PM</span>
-                                    <div class="dot bg-info"></div>
-                                    <div class="content">           
-                                        <h4 class="title">New Release</h4>
-                                        <div class="text">Export the version 2.3</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- * timeline -->
-                        </div>
-                    </div>
-                    <!-- </ul> -->
+                <div id="loadTimeline">
+                    <!-- Timeline items will be dynamically added here -->
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
 </div>
-<input type="hidden" name="bulantahun" id="bulantahun" value="{{date('Y-m', strtotime(date('Y-m-d') . '- 1 month' ))}}">
 
 @push('myscript')
     <script>
-        $(document).ready(function() {
-            $('#tahun').on('change', function() {
-                var tahunSelected = $(this).val();
-                alert('Anda memilih tahun: ' + tahunSelected);
-                // Atau melakukan aksi lainnya, misalnya mengirim permintaan Ajax untuk memperbarui konten berdasarkan tahun yang dipilih
+        $(document).on('click', '.listCard', function (e) {
+            $('#closeModalButton').on('click', function () {
+                $('#modal-timeline').modal('hide');
+            });
+            e.preventDefault();
+            var slug = $(this).data('slug');
+            $.ajax({
+                type: 'POST',
+                url: '/get-timeline',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    slug: slug
+                },
+                success: function (data) {
+                    if (data.pesan === 'SUCCESS') {
+                        var html = '';
+                        $('#judulTimeline').text("BAPP " + data.data.layanan.aplikasi.nama_layanan + " Periode " + data.data.layanan.bulan + " - " + data.data.layanan.tahun);
+                        $.each(data.data.timeline, function (index, value) {
+                            var act = index === 0 ? "event2" : "";
+                            var d1 = new Date(value.created_at);
+
+                            function formatDate(date) {
+                                var d = new Date(date),
+                                    month = '' + (d.getMonth() + 1),
+                                    day = '' + d.getDate(),
+                                    year = d.getFullYear();
+
+                                if (month.length < 2)
+                                    month = '0' + month;
+                                if (day.length < 2)
+                                    day = '0' + day;
+
+                                return [day, month, year].join('-');
+                            }
+
+                            var link = value.status.status_tw === 'Selesai'
+                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
+                                : "";
+
+                            var result2 = formatDate(d1);
+
+                            html += "<li class='event " + act + "' data-date='" + result2 + "'>" +
+                                "<h3>" + value.status.status_tw + "</h3>" +
+                                "<p>" + value.keterangan + " " + link + ".</p>" +
+                                "</li>";
+                        });
+                        $('#loadTimeline').html(html);
+                        $('#modal-timeline').modal('show');
+                    } else {
+                        alert("Gagal memuat data timeline.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + xhr.responseText;
+                    console.log(errorMessage);
+                    alert('Error - ' + errorMessage);
+                }
             });
         });
-    </script>
+    </script>   
 @endpush
-
-
-

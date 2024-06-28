@@ -50,11 +50,15 @@ Route::middleware(['auth'])->group(function () {
     
     // Monitoring
     Route::get('/monitoring', [MonitoringController::class, 'monitoring'])->name('monitoring');
+    Route::get('/getmonitoring', [MonitoringController::class, 'monitoring'])->name('monitoring.index');
+
+    // Timeline
+    Route::post('/get-timeline', [MonitoringController::class, 'get_timeline'])->name('get-timeline');
     
     // Test
+    Route::post('/get-timeline', [TestController::class, 'get_timeline'])->name('get-timeline');
     Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
-    Route::get('/get-dashboard-lpp', [TestController::class, 'getDashboardLpp'])->name('get_dashboard_lpp');
-    Route::get('/getmonitoring', [TestController::class, 'index'])->name('monitoring.index');
+    Route::get('/search-monitoring', [TestController::class, 'search'])->name('search.monitoring');
 });
 
 
