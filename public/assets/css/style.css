@@ -55,6 +55,20 @@ button:focus {
   z-index: 999;
 }
 
+.tahun-container {
+  display: flex;
+  align-items: baseline;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: flex-end;
+
+}
+
+.tahun-label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
 .appHeader {
   min-height: 56px;
   display: flex;
@@ -3728,7 +3742,7 @@ a.badge-dark {
 
 .bg-dasar {
   background: #e9ecef !important;
-  color: #fff;
+  color: #000;
 }
 
 .bg-secondary {

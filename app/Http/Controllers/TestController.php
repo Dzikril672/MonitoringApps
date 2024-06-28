@@ -35,10 +35,10 @@ class TestController extends Controller
         $bulanArray = range(1, 12);
         $dataBulan = [];
 
-        $request->merge(['slug' => '2023-04@apkt']);
+        // $request->merge(['slug' => '2023-04@apkt']);
 
-        $prosess = new Prosess();
-        $data = $prosess->get_timeline($request);
+        // $prosess = new Prosess();
+        // $data = $prosess->get_timeline($request);
 
         // dd($data);
 
@@ -49,9 +49,9 @@ class TestController extends Controller
         //         ->get();
         // }
 
-        $prosess = new Prosess();
-        // $data = $prosess->get_lpp_bulanan($request);
-        $data = $prosess->get_timeline($request);
+        // $prosess = new Prosess();
+        // // $data = $prosess->get_lpp_bulanan($request);
+        // $data = $prosess->get_timeline($request);
 
 
         // dd($data);
@@ -96,34 +96,22 @@ class TestController extends Controller
         return view('monitoring.test', get_defined_vars());
     }
 
-    public function getDashboardLpp(Request $request)
-    {
-        $tahun = $request->input('tahun');
-        $dataBulan = [];
+    // public function getDashboardLpp(Request $request)
+    // {
+    //     $tahun = $request->input('tahun');
+    //     $dataBulan = [];
 
-        for ($i = 1; $i <= 12; $i++) {
-            $dataBulan[$i] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $i])
-                ->with('status', 'aplikasi')
-                ->orderBy('id', 'DESC')
-                ->get();
-        }
+    //     for ($i = 1; $i <= 12; $i++) {
+    //         $dataBulan[$i] = InputLppLayanan::where(['is_active' => 1, 'tahun' => $tahun, 'bulan' => $i])
+    //             ->with('status', 'aplikasi')
+    //             ->orderBy('id', 'DESC')
+    //             ->get();
+    //     }
 
-        return response()->json(['dataBulan' => $dataBulan]);
-    }
+    //     return response()->json(['dataBulan' => $dataBulan]);
+    // }
 
     // AJAX 
-
-    // public function get_dashboard_lpp(Request $request)
-    // {
-    //     $prosess = new Prosess();
-    //     $data = $prosess->get_dashboard_lpp();
-
-    //     return response()->json([
-    //         'pesan' => 'SUCCESS',
-    //         'data' => $data
-    //     ]);
-    // }
-    // END AJAX 
     public function get_timeline(Request $request)
     {
         $prosess = new Prosess();
@@ -135,16 +123,16 @@ class TestController extends Controller
         ]);
     }
 
-    public function get_lpp_bulanan(Request $request)
-    {
-        $prosess = new Prosess();
-        $data = $prosess->get_lpp_bulanan($request);
+    // public function get_lpp_bulanan(Request $request)
+    // {
+    //     $prosess = new Prosess();
+    //     $data = $prosess->get_lpp_bulanan($request);
 
-        dd($data);
+    //     dd($data);
 
-        return response()->json([
-            'pesan' => 'SUCCESS',
-            'data' => $data
-        ]);
-    }
+    //     return response()->json([
+    //         'pesan' => 'SUCCESS',
+    //         'data' => $data
+    //     ]);
+    // }
 }

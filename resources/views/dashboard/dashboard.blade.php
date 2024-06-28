@@ -226,7 +226,7 @@
                         $('#resultContainerBelum').html('<div style="text-align: center;">Layanan tidak ada</div>');
                     }
                 }
-            });
+            });         
         });
 
         $('#cariBerjalan').on('keyup', function() {
