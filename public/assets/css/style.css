@@ -5274,6 +5274,45 @@ textarea,
   margin-bottom: -20px;
 }
 
+.timeline {
+  list-style: none;
+  padding: 0;
+}
+
+.timeline li {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+
+.timeline li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #007bff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.timeline li.active::before {
+  background-color: #007bff;
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+}
+
+.timeline li h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.timeline li p {
+  margin: 0;
+  font-size: 14px;
+}
+
 .login-form {
   max-width: 500px;
   margin: auto;
