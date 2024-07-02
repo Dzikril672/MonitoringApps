@@ -1,5 +1,90 @@
 @extends('layouts.master')
 <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+<style>
+    /* assets/css/custom.css */
+
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.timeline {
+    position: relative;
+    padding: 20px 0;
+    list-style: none;
+}
+
+.timeline:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 2px;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  background: #000;
+  z-index: 1;
+  margin-left: 125px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 40px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-left: -11px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.timeline-item.active::before {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.timeline-item .timeline-content {
+    padding: 0;
+    margin-left: 20px;
+}
+
+.timeline-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.timeline-item p {
+    margin: 0;
+}
+
+.timeline-item a {
+    color: #007bff;
+}
+
+.timeline-item a:hover {
+    text-decoration: underline;
+}
+
+
+</style>
 
 @section('header')
     <!-- App Header -->
@@ -124,9 +209,9 @@
                 <div class="py-2">
                     <h2 class="font-weight-light text-center text-muted py-3" id="judulTimeline"></h2>
                 </div>
-                <div id="loadTimeline">
+                <ul id="loadTimeline" class="timeline">
                     <!-- Timeline items will be dynamically added here -->
-                </div>
+                </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Tutup</button>
@@ -134,6 +219,7 @@
         </div>
     </div>
 </div>
+
 
 @push('myscript')
     <script>
@@ -145,7 +231,7 @@
             var slug = $(this).data('slug');
             $.ajax({
                 type: 'POST',
-                url: '{{ route('get_timeline') }}',
+                url: '{{ route('get-timeline') }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -157,7 +243,7 @@
                         var html = '';
                         $('#judulTimeline').text("BAPP " + data.data.layanan.aplikasi.nama_layanan + " Periode " + data.data.layanan.bulan + " - " + data.data.layanan.tahun);
                         $.each(data.data.timeline, function (index, value) {
-                            var act = index === 0 ? "event2" : "";
+                            var act = index === 0 ? "timeline-item active" : "timeline-item";
                             var d1 = new Date(value.created_at);
 
                             function formatDate(date) {
@@ -180,9 +266,14 @@
 
                             var result2 = formatDate(d1);
 
-                            html += "<li class='event " + act + "' data-date='" + result2 + "'>" +
+                           var result2 = formatDate(d1);
+
+                            html += "<span>" + result2 + "</span>"+
+                                "<li class='" + act + "' style='margin-left:125px;' data-date='" + result2 + "'>" +
+                                "<div class='timeline-content'>" +
                                 "<h3>" + value.status.status_tw + "</h3>" +
                                 "<p>" + value.keterangan + " " + link + ".</p>" +
+                                "</div>" +
                                 "</li>";
                         });
                         $('#loadTimeline').html(html);
@@ -198,5 +289,6 @@
                 }
             });
         });
-    </script>   
+    </script>
 @endpush
+
