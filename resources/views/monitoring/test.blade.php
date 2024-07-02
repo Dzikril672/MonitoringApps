@@ -245,7 +245,19 @@
                 success: function (data) {
                     if (data.pesan === 'SUCCESS') {
                         var html = '';
-                        $('#judulTimeline').text("BAPP " + data.data.layanan.aplikasi.nama_layanan + " Periode " + data.data.layanan.bulan + " - " + data.data.layanan.tahun);
+                        // Fungsi untuk mengonversi angka bulan menjadi nama bulan
+                        function getMonthName(monthNumber) {
+                            const monthNames = [
+                                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                            ];
+
+                            return monthNames[monthNumber - 1];
+                        }
+
+                        var layanan = data.data.layanan;
+                        var bulanNama = getMonthName(parseInt(layanan.bulan));
+                        $('#judulTimeline').text("BAPP " + layanan.aplikasi.nama_layanan + " Periode " + bulanNama + " - " + layanan.tahun);
                         $.each(data.data.timeline, function (index, value) {
                             var act = index === 0 ? "timeline-item active" : "timeline-item";
                             var d1 = new Date(value.created_at);
