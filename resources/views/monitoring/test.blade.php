@@ -33,7 +33,7 @@
   top: 0;
   background: #000;
   z-index: 1;
-  margin-left: 125px;
+  margin-left: 123px;
 }
 
 .timeline-item {
@@ -57,9 +57,13 @@
 }
 
 .timeline-item.active::before {
-    background-color: #ffc107;
-    border-color: #ffc107;
+    border-color: #fff;
 }
+
+.timeline-item.revision::before {
+    border-color: #ff0000; /* Warna merah untuk revisi */
+}
+
 
 .timeline-item .timeline-content {
     padding: 0;
@@ -135,7 +139,7 @@
             <!-- Search form -->
             <div class="row mt-1">
                 <div class="col">
-                    <form id="searchForm" action="{{ route('monitoring.index') }}" method="GET">
+                    <form id="searchForm" action="{{ route('test') }}" method="GET">
                         <div class="row">
                             <div class="col-8">
                                 <div class="form-group">
@@ -276,6 +280,7 @@
                                 "</div>" +
                                 "</li>";
                         });
+                        
                         $('#loadTimeline').html(html);
                         $('#modal-timeline').modal('show');
                     } else {
@@ -288,7 +293,7 @@
                     alert('Error - ' + errorMessage);
                 }
             });
-        });
+        }); 
     </script>
 @endpush
 
