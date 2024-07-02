@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="col-4" style="padding-right: 0px !important;">
-                                <button type="submit" class="btn btn-primary w-100">
+                                <button type="button" id="btnCari" class="btn btn-primary w-100">
                                     <ion-icon name="search-outline"></ion-icon>
                                     cari
                                 </button>
@@ -73,30 +73,28 @@
         <div class="tab-content" style="margin-bottom:100px;">
             @foreach($namaBulanTab as $index => $month)
                 <div class="tab-pane fade @if($index == $bulanIni-1) show active @endif" id="{{ strtolower($month) }}" role="tabpanel">
-                    @foreach($dataBulan[$index + 1] as $data)
-                        <ul class="listview image-listview">
-                            <li>
-                                <a href="#" id="listCard" class="listCard digi" data-slug="{{$data -> slug}}">
-                                    <div class="item">
-                                        <div class="in">
-                                            <div>
-                                                <b>{{ $data->aplikasi->nama_layanan }}</b>
-                                                <br>
-                                                <small class="text-muted">{{ $data->status->status_out_tw }}</small>
+                    <div id="resultCari{{ $index+1 }}">
+                        @foreach($dataBulan[$index + 1] as $data)
+                            <ul class="listview image-listview">
+                                <li>
+                                    <a href="#" id="listCard" class="listCard digi" data-slug="{{$data -> slug}}">
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>{{ $data->aplikasi->nama_layanan }}</b>
+                                                    <br>
+                                                    <small class="text-muted">{{ $data->status->status_out_tw }}</small>
+                                                </div>
+                                                <span class="badge {{ $data->status->status_out_tw == 'Selesai' ? "bg-udah" : "bg-belum" }}">
+                                                    {{ $data->status->status_out_tw == 'Selesai' ? 'Selesai' : 'Proses' }}
+                                                </span>
                                             </div>
-                                            <span class="badge {{ $data->status->status_out_tw == 'Selesai' ? "bg-udah" : "bg-belum" }}">
-                                                @if($data->status->status_out_tw == 'Selesai')
-                                                    selesai
-                                                @else
-                                                    Proses
-                                                @endif    
-                                            </span>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    @endforeach
+                                    </a>
+                                </li>
+                            </ul>
+                        @endforeach
+                    </div>
                 </div>
             @endforeach
         </div>
@@ -128,46 +126,217 @@
 
 @push('myscript')
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $(document).ready(function() {
             $('#pilih-tahun').on('change', function() {
                 var tahunSelected = $(this).val();
+                var cari = $('#cari').val();
+                console.log('Tahun yang dipilih:', tahunSelected);
+                console.log('Data yang dipilih:', cari);
+
                 $.ajax({
-                    url: '/monitoring',  // URL endpoint untuk mendapatkan data berdasarkan tahun
-                    type: 'GET',
+                    url: '/getDataByYear',
+                    type: 'POST',
                     dataType: "json",
-                    data: { tahun: tahunSelected },
+                    data: { 
+                        tahun: tahunSelected,
+                        cari: cari
+                     },
                     success: function(response) {
-                        $('#resultCari').html('');
-                        if (response.length > 0) {
-                            $.each(response, function(key, data) {
-                                let item = `
-                                    <ul class="listview image-listview">
-                                        <li>
-                                            <a href="#" id="listCard" class="digi">
-                                                <div class="item">
-                                                    <div class="in">
-                                                        <div>
-                                                            <b>${data.nama_layanan}</b>
-                                                            <br>
-                                                            <small class="text-muted">${data.status_out_tw}</small>
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html(''); // Kosongkan isi #resultCari untuk setiap bulan
+                        });
+
+                        if (Object.keys(response).length > 0) {
+                            $.each(response, function(bulan, dataBulan) {
+                                if (dataBulan.length > 0) {
+                                    $.each(dataBulan, function(key, data) {
+                                        let namaLayanan = data.aplikasi.nama_layanan;
+                                        let statusTW = data.status.status_out_tw;
+                                        let monthId = `resultCari${bulan}`;
+
+                                        let item = `
+                                            <ul class="listview image-listview">
+                                                <li>
+                                                    <a href="#" class="listCard digi" data-slug="${data.slug}">
+                                                        <div class="item">
+                                                            <div class="in">
+                                                                <div>
+                                                                    <b>${namaLayanan}</b>
+                                                                    <br>
+                                                                    <small class="text-muted">${statusTW}</small>
+                                                                </div>
+                                                                <span class="badge ${statusTW === 'Selesai' ? "bg-udah" : "bg-belum"}">
+                                                                    ${statusTW === 'Selesai' ? 'Selesai' : 'Proses'}
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                        <span class="badge ${data.status_out_tw == 'Selesai' ? "bg-udah" : "bg-belum"}">
-                                                            ${data.status_out_tw == 'Selesai' ? "Selesai" : "Proses"}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>`;
-                                $('#resultCari').append(item);
+                                                    </a>
+                                                </li>
+                                            </ul>`;
+                                        // console.log(monthId, item);
+                                        $(`#${monthId}`).append(item); // Tambahkan item baru ke dalam ID yang sesuai
+                                    });
+                                } else {
+                                    let monthId = `resultCari${bulan}`;
+                                    $(`#${monthId}`).html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                                }
                             });
                         } else {
-                            $('#resultCari').html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                            $('.tab-pane').each(function() {
+                                $(this).find('[id^=resultCari]').html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                            });
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('Error:', textStatus, errorThrown);
-                        $('#resultCari').html('<div style="text-align: center; color: red;">Terjadi kesalahan saat mengambil data. Silakan coba lagi.</div>');
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html('<div style="text-align: center; color: red;">Terjadi kesalahan saat mengambil data. Silakan coba lagi.</div>');
+                        });
+                    }
+                });
+            });
+
+
+            $('#btnCari').on('click', function() {
+                var tahunSelected = $('#pilih-tahun').val();
+                var cari = $('#cari').val();
+                console.log('Tahun yang dipilih:', tahunSelected);
+                console.log('Tahun yang dipilih:', cari);
+
+                $.ajax({
+                    url: '/getDataByYear',
+                    type: 'POST',
+                    dataType: "json",
+                    data: { 
+                        tahun: tahunSelected,
+                        cari: cari
+                     },
+                    success: function(response) {
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html(''); // Kosongkan isi #resultCari untuk setiap bulan
+                        });
+
+                        if (Object.keys(response).length > 0) {
+                            $.each(response, function(bulan, dataBulan) {
+                                if (dataBulan.length > 0) {
+                                    $.each(dataBulan, function(key, data) {
+                                        let namaLayanan = data.aplikasi.nama_layanan;
+                                        let statusTW = data.status.status_out_tw;
+                                        let monthId = `resultCari${bulan}`;
+
+                                        let item = `
+                                            <ul class="listview image-listview">
+                                                <li>
+                                                    <a href="#" class="listCard digi" data-slug="${data.slug}">
+                                                        <div class="item">
+                                                            <div class="in">
+                                                                <div>
+                                                                    <b>${namaLayanan}</b>
+                                                                    <br>
+                                                                    <small class="text-muted">${statusTW}</small>
+                                                                </div>
+                                                                <span class="badge ${statusTW === 'Selesai' ? "bg-udah" : "bg-belum"}">
+                                                                    ${statusTW === 'Selesai' ? 'Selesai' : 'Proses'}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>`;
+                                        // console.log(monthId, item);
+                                        $(`#${monthId}`).append(item); // Tambahkan item baru ke dalam ID yang sesuai
+                                    });
+                                } else {
+                                    let monthId = `resultCari${bulan}`;
+                                    $(`#${monthId}`).html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                                }
+                            });
+                        } else {
+                            $('.tab-pane').each(function() {
+                                $(this).find('[id^=resultCari]').html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html('<div style="text-align: center; color: red;">Terjadi kesalahan saat mengambil data. Silakan coba lagi.</div>');
+                        });
+                    }
+                });
+            });
+
+            $('#cari').on('keyup', function() {
+                var tahunSelected = $('#pilih-tahun').val();
+                var cari = $(this).val();
+                console.log('Tahun yang dipilih:', tahunSelected);
+                console.log('Tahun yang dipilih:', cari);
+
+                $.ajax({
+                    url: '/getDataByYear',
+                    type: 'POST',
+                    dataType: "json",
+                    data: { 
+                        tahun: tahunSelected,
+                        cari: cari
+                     },
+                    success: function(response) {
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html(''); // Kosongkan isi #resultCari untuk setiap bulan
+                        });
+
+                        if (Object.keys(response).length > 0) {
+                            $.each(response, function(bulan, dataBulan) {
+                                if (dataBulan.length > 0) {
+                                    $.each(dataBulan, function(key, data) {
+                                        let namaLayanan = data.aplikasi.nama_layanan;
+                                        let statusTW = data.status.status_out_tw;
+                                        let monthId = `resultCari${bulan}`;
+
+                                        let item = `
+                                            <ul class="listview image-listview">
+                                                <li>
+                                                    <a href="#" class="listCard digi" data-slug="${data.slug}">
+                                                        <div class="item">
+                                                            <div class="in">
+                                                                <div>
+                                                                    <b>${namaLayanan}</b>
+                                                                    <br>
+                                                                    <small class="text-muted">${statusTW}</small>
+                                                                </div>
+                                                                <span class="badge ${statusTW === 'Selesai' ? "bg-udah" : "bg-belum"}">
+                                                                    ${statusTW === 'Selesai' ? 'Selesai' : 'Proses'}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>`;
+                                        // console.log(monthId, item);
+                                        $(`#${monthId}`).append(item); // Tambahkan item baru ke dalam ID yang sesuai
+                                    });
+                                } else {
+                                    let monthId = `resultCari${bulan}`;
+                                    $(`#${monthId}`).html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                                }
+                            });
+                        } else {
+                            $('.tab-pane').each(function() {
+                                $(this).find('[id^=resultCari]').html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html('<div style="text-align: center; color: red;">Terjadi kesalahan saat mengambil data. Silakan coba lagi.</div>');
+                        });
                     }
                 });
             });

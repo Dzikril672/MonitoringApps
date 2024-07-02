@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Component;
 use App\Models\InputLppLayanan;
 use App\Models\LayananAplikasi;
-use Exception;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -86,6 +86,7 @@ class DashboardController extends Controller
     
         return response()->json($cariLayananBelum);
     }
+
     public function searchBerjalan(Request $request) {
         $cariBerjalan = $request->cariBerjalan;
     
@@ -102,7 +103,5 @@ class DashboardController extends Controller
             ->get();
     
         return response()->json($cariLayananBerjalan);
-    }
-    
-    
+    }    
 }

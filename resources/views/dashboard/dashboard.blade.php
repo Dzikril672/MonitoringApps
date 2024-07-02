@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
+                                            <button type="button" id="btnCariBelum" class="btn btn-primary w-100">
                                                 <ion-icon name="search-outline"></ion-icon>
                                                 cari
                                             </button>
@@ -152,7 +152,7 @@
 
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary w-100">
+                                            <button type="button" id="btnCariBerjalan" class="btn btn-primary w-100">
                                                 <ion-icon name="search-outline"></ion-icon>
                                                 cari
                                             </button>
@@ -205,15 +205,54 @@
                     $('#resultContainerBelum').html('');
                     if (response.length > 0) {
                         $.each(response, function(key, d) {
+                            var namaLayanan = d.aplikasi.nama_layanan;
+                            var status = d.status.status_out_tw;
                             let item = `
                                 <ul class="listview image-listview">
                                     <li>
                                         <div class="item">
                                             <div class="in">
                                                 <div>
-                                                    <b>${d.aplikasi.nama_layanan}</b>
+                                                    <b>${namaLayanan}</b>
                                                     <br>
-                                                    <small class="text-muted">${d.status.status_out_tw}</small>
+                                                    <small class="text-muted">${status}</small>
+                                                </div>
+                                                <span class="badge bg-belum">{{ $comp->tgl_indo($d->bulan) }} {{ $d->tahun }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>`;
+                            $('#resultContainerBelum').append(item);
+                        });
+                    } else {
+                        $('#resultContainerBelum').html('<div style="text-align: center;">Layanan tidak ada</div>');
+                    }
+                }
+            });         
+        });
+
+        $('#btnCariBelum').on('click', function() {
+            let cariBelum = $('#cariBelum').val();
+            
+            $.ajax({
+                url: '/search-belumselesai',
+                type: 'GET',
+                data: { cariBelum: cariBelum },
+                success: function(response) {
+                    $('#resultContainerBelum').html('');
+                    if (response.length > 0) {
+                        $.each(response, function(key, d) {
+                            var namaLayanan = d.aplikasi.nama_layanan;
+                            var status = d.status.status_out_tw;
+                            let item = `
+                                <ul class="listview image-listview">
+                                    <li>
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>${namaLayanan}</b>
+                                                    <br>
+                                                    <small class="text-muted">${status}</small>
                                                 </div>
                                                 <span class="badge bg-belum">{{ $comp->tgl_indo($d->bulan) }} {{ $d->tahun }}</span>
                                             </div>
@@ -231,6 +270,41 @@
 
         $('#cariBerjalan').on('keyup', function() {
             let cariBerjalan = $(this).val();
+            
+            $.ajax({
+                url: '/search-berjalan',
+                type: 'GET',
+                data: { cariBerjalan: cariBerjalan },
+                success: function(response) {
+                    $('#resultContainerBerjalan').html('');
+                    if (response.length > 0) {
+                        $.each(response, function(key, i) {
+                            let item = `
+                                <ul class="listview image-listview">
+                                    <li>
+                                        <div class="item">
+                                            <div class="in">
+                                                <div>
+                                                    <b>${i.aplikasi.nama_layanan}</b>
+                                                    <br>
+                                                    <small class="text-muted">${i.status.status_out_tw}</small>
+                                                </div>
+                                                <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>`;
+                            $('#resultContainerBerjalan').append(item);
+                        });
+                    } else {
+                        $('#resultContainerBerjalan').html('<div style="text-align: center;">Layanan tidak ada</div>');
+                    }
+                }
+            });
+        });
+
+        $('#btnCariBerjalan').on('click', function() {
+            let cariBerjalan = $('#cariBerjalan').val();
             
             $.ajax({
                 url: '/search-berjalan',
