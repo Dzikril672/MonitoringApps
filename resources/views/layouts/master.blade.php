@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <link rel="manifest" href="{{asset('__manifest.json')}}">
 
-    <!-- CSRF-TOKEN -->
-    <meta name="csrf-token" content="{{csrf_token() }}">
+     <!-- CSRF Token -->
+     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body style="background-color:#e9ecef;">

@@ -1,5 +1,94 @@
 @extends('layouts.master')
 
+<link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+<style>
+    /* assets/css/custom.css */
+
+    .modal-header {
+        background-color: #007bff;
+        color: #fff;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .timeline {
+        position: relative;
+        padding: 20px 0;
+        list-style: none;
+    }
+
+    .timeline:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 2px;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    background: #000;
+    z-index: 1;
+    margin-left: 123px;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+        padding-left: 40px;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin-left: -11px;
+        border: 2px solid #007bff;
+        border-radius: 50%;
+        background-color: #fff;
+        z-index: 1;
+    }
+
+    .timeline-item.active::before {
+        border-color: #fff;
+    }
+
+    .timeline-item.revision::before {
+        border-color: #ff0000; /* Warna merah untuk revisi */
+    }
+
+
+    .timeline-item .timeline-content {
+        padding: 0;
+        margin-left: 20px;
+    }
+
+    .timeline-item h3 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .timeline-item p {
+        margin: 0;
+    }
+
+    .timeline-item a {
+        color: #007bff;
+    }
+
+    .timeline-item a:hover {
+        text-decoration: underline;
+    }
+</style>
+
 @section('header')
     <!-- App Header -->
     <div class="appHeader bg-primary">
@@ -44,7 +133,7 @@
 
             <div class="row mt-1">
                 <div class="col">
-                    <form id="searchForm" action="{{ route('monitoring.index') }}" method="GET">
+                    <form id="searchForm" method="GET">
                         @csrf
                         <div class="row mt-2">
                             <div class="col-8" style="padding-left: 0px !important;">
@@ -112,9 +201,9 @@
                 <div class="py-2">
                     <h2 class="font-weight-light text-center text-muted py-3" id="judulTimeline"></h2>
                 </div>
-                <div id="loadTimeline">
-                    
-                </div>
+                <ul id="loadTimeline" class="timeline">
+                    <!-- Timeline items will be dynamically added here -->
+                </ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Tutup</button>
@@ -123,6 +212,7 @@
     </div>
 </div>
 <input type="hidden" name="bulantahun" id="bulantahun" value="{{date('Y-m', strtotime(date('Y-m-d') . '- 1 month' ))}}">
+
 
 @push('myscript')
     <script>
@@ -350,8 +440,7 @@
             var slug = $(this).data('slug');
             $.ajax({
                 type: 'POST',
-                dataType: "json",
-                url: '/get-timeline',
+                url: '{{ route('get-timeline.test') }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -361,9 +450,21 @@
                 success: function (data) {
                     if (data.pesan === 'SUCCESS') {
                         var html = '';
-                        $('#judulTimeline').text("BAPP " + data.data.layanan.aplikasi.nama_layanan + " Periode " + data.data.layanan.bulan + " - " + data.data.layanan.tahun);
+                        // Fungsi untuk mengonversi angka bulan menjadi nama bulan
+                        function getMonthName(monthNumber) {
+                            const monthNames = [
+                                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                            ];
+
+                            return monthNames[monthNumber - 1];
+                        }
+
+                        var layanan = data.data.layanan;
+                        var bulanNama = getMonthName(parseInt(layanan.bulan));
+                        $('#judulTimeline').text("BAPP " + layanan.aplikasi.nama_layanan + " Periode " + bulanNama + " - " + layanan.tahun);
                         $.each(data.data.timeline, function (index, value) {
-                            var act = index === 0 ? "event2" : "";
+                            var act = index === 0 ? "timeline-item active" : "timeline-item";
                             var d1 = new Date(value.created_at);
 
                             function formatDate(date) {
@@ -386,11 +487,17 @@
 
                             var result2 = formatDate(d1);
 
-                            html += "<li class='event " + act + "' data-date='" + result2 + "'>" +
+                           var result2 = formatDate(d1);
+
+                            html += "<span>" + result2 + "</span>"+
+                                "<li class='" + act + "' style='margin-left:125px;' data-date='" + result2 + "'>" +
+                                "<div class='timeline-content'>" +
                                 "<h3>" + value.status.status_tw + "</h3>" +
                                 "<p>" + value.keterangan + " " + link + ".</p>" +
+                                "</div>" +
                                 "</li>";
                         });
+                        
                         $('#loadTimeline').html(html);
                         $('#modal-timeline').modal('show');
                     } else {
@@ -403,6 +510,7 @@
                     alert('Error - ' + errorMessage);
                 }
             });
-        });
+        }); 
     </script>
 @endpush
+

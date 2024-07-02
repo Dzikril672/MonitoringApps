@@ -42,7 +42,7 @@
         <div class="section mt-3" id="presence-section">
             <div class="container mt-2">
                 <div class="change-password-page">
-                    <form method="POST" action="{{ route('updatepassword') }}">
+                    <form method="POST" action="{{ route('password.change') }}">
                         @csrf
                         {{-- @if (session('status'))
                             <div class="alert alert-success">{{ session('status') }}</div>
