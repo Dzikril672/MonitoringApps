@@ -36,7 +36,7 @@
             <div class="list-group-item list-group-item-action d-flex align-items-center">
                 <ion-icon name="moon-outline" class="mr-2"></ion-icon> Dark Mode
                 <div class="custom-control custom-switch ml-auto">
-                    <input type="checkbox" class="custom-control-input dark-mode-switch" id="darkmodesidebar">
+                    <input type="hidden" class="custom-control-input dark-mode-switch" id="darkmodesidebar">
                     <label class="custom-control-label" for="darkmodesidebar"></label>
                 </div>
             </div>
