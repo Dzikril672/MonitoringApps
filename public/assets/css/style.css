@@ -5317,6 +5317,17 @@ textarea,
   box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
 }
 
+.timeline li.timeline-item-red.active::before {
+  background-color: #f12a2c; /* Red for repeated statuses */
+  box-shadow: 0 0 20px rgba(241, 42, 44, 0.8);
+}
+
+.timeline li.timeline-item-blue.active::before {
+  background-color: #007bff; /* Blue for normal active status */
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+}
+
+
 .timeline li h3 {
   margin: 0;
   font-size: 16px;

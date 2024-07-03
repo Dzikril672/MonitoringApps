@@ -60,10 +60,6 @@
     border-color: #fff;
 }
 
-.timeline-item.revision::before {
-    border-color: #ff0000; /* Warna merah untuk revisi */
-}
-
 
 .timeline-item .timeline-content {
     padding: 0;
@@ -82,6 +78,7 @@
 .timeline-item a {
     color: #007bff;
 }
+
 
 .timeline-item a:hover {
     text-decoration: underline;
@@ -433,85 +430,180 @@
             });
         });
 
-        $(document).on('click', '.listCard', function (e) {
-            $('#closeModalButton').on('click', function () {
-                $('#modal-timeline').modal('hide');
-            });
-            e.preventDefault();
-            var slug = $(this).data('slug');
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('get-timeline.test') }}',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    slug: slug
-                },
-                success: function (data) {
-                    if (data.pesan === 'SUCCESS') {
-                        var html = '';
-                        // Fungsi untuk mengonversi angka bulan menjadi nama bulan
-                        function getMonthName(monthNumber) {
-                            const monthNames = [
-                                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
-                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                            ];
+        // $(document).on('click', '.listCard', function (e) {
+        //     $('#closeModalButton').on('click', function () {
+        //         $('#modal-timeline').modal('hide');
+        //     });
+        //     e.preventDefault();
+        //     var slug = $(this).data('slug');
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '{{ route('get-timeline.test') }}',
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         data: {
+        //             slug: slug
+        //         },
+        //         success: function (data) {
+        //             if (data.pesan === 'SUCCESS') {
+        //                 var html = '';
+        //                 // Fungsi untuk mengonversi angka bulan menjadi nama bulan
+        //                 function getMonthName(monthNumber) {
+        //                     const monthNames = [
+        //                         "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+        //                         "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        //                     ];
 
-                            return monthNames[monthNumber - 1];
+        //                     return monthNames[monthNumber - 1];
+        //                 }
+
+        //                 var layanan = data.data.layanan;
+        //                 var bulanNama = getMonthName(parseInt(layanan.bulan));
+        //                 $('#judulTimeline').text("BAPP " + layanan.aplikasi.nama_layanan + " Periode " + bulanNama + " - " + layanan.tahun);
+        //                 $.each(data.data.timeline, function (index, value) {
+        //                     var act = index === 0 ? "timeline-item active" : "timeline-item";
+        //                     var d1 = new Date(value.created_at);
+
+        //                     function formatDate(date) {
+        //                         var d = new Date(date),
+        //                             month = '' + (d.getMonth() + 1),
+        //                             day = '' + d.getDate(),
+        //                             year = d.getFullYear();
+
+        //                         if (month.length < 2)
+        //                             month = '0' + month;
+        //                         if (day.length < 2)
+        //                             day = '0' + day;
+
+        //                         return [day, month, year].join('-');
+        //                     }
+
+        //                     var link = value.status.status_tw === 'Selesai'
+        //                         ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
+        //                         : "";
+
+        //                     var result2 = formatDate(d1);
+
+        //                    var result2 = formatDate(d1);
+
+        //                     html += "<span>" + result2 + "</span>"+
+        //                         "<li class='" + act + "' style='margin-left:125px;' data-date='" + result2 + "'>" +
+        //                         "<div class='timeline-content'>" +
+        //                         "<h3>" + value.status.status_tw + "</h3>" +
+        //                         "<p>" + value.keterangan + " " + link + ".</p>" +
+        //                         "</div>" +
+        //                         "</li>";
+        //                 });
+                        
+        //                 $('#loadTimeline').html(html);
+        //                 $('#modal-timeline').modal('show');
+        //             } else {
+        //                 alert("Gagal memuat data timeline.");
+        //             }
+        //         },
+        //         error: function (xhr, status, error) {
+        //             var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + xhr.responseText;
+        //             console.log(errorMessage);
+        //             alert('Error - ' + errorMessage);
+        //         }
+        //     });
+        // }); 
+        $(document).on('click', '.listCard', function (e) {
+        $('#closeModalButton').on('click', function () {
+            $('#modal-timeline').modal('hide');
+        });
+        e.preventDefault();
+        var slug = $(this).data('slug');
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('get-timeline.test') }}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                slug: slug
+            },
+            success: function (data) {
+                if (data.pesan === 'SUCCESS') {
+                    var html = '';
+                    var statusCount = {}; // Object to keep track of status occurrences
+                    var statusRepeated = false; // Flag to indicate if any status is repeated
+
+                    function getMonthName(monthNumber) {
+                        const monthNames = [
+                            "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                        ];
+                        return monthNames[monthNumber - 1];
+                    }
+
+                    var layanan = data.data.layanan;
+                    var bulanNama = getMonthName(parseInt(layanan.bulan));
+                    $('#judulTimeline').text("BAPP " + layanan.aplikasi.nama_layanan + " Periode " + bulanNama + " - " + layanan.tahun);
+
+                    $.each(data.data.timeline, function (index, value) {
+                        var act = index === 0 ? "timeline-item active" : "timeline-item";
+                        var d1 = new Date(value.created_at);
+
+                        function formatDate(date) {
+                            var d = new Date(date),
+                                month = '' + (d.getMonth() + 1),
+                                day = '' + d.getDate(),
+                                year = d.getFullYear();
+
+                            if (month.length < 2)
+                                month = '0' + month;
+                            if (day.length < 2)
+                                day = '0' + day;
+
+                            return [day, month, year].join('-');
                         }
 
-                        var layanan = data.data.layanan;
-                        var bulanNama = getMonthName(parseInt(layanan.bulan));
-                        $('#judulTimeline').text("BAPP " + layanan.aplikasi.nama_layanan + " Periode " + bulanNama + " - " + layanan.tahun);
-                        $.each(data.data.timeline, function (index, value) {
-                            var act = index === 0 ? "timeline-item active" : "timeline-item";
-                            var d1 = new Date(value.created_at);
+                        var link = value.status.status_tw === 'Selesai'
+                            ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
+                            : "";
 
-                            function formatDate(date) {
-                                var d = new Date(date),
-                                    month = '' + (d.getMonth() + 1),
-                                    day = '' + d.getDate(),
-                                    year = d.getFullYear();
+                        var result2 = formatDate(d1);
 
-                                if (month.length < 2)
-                                    month = '0' + month;
-                                if (day.length < 2)
-                                    day = '0' + day;
+                        // Increment status count
+                        if (statusCount[value.status.status_tw]) {
+                            statusCount[value.status.status_tw]++;
+                            statusRepeated = true;
+                        } else {
+                            statusCount[value.status.status_tw] = 1;
+                        }
 
-                                return [day, month, year].join('-');
-                            }
+                        // Determine checkpoint class based on status occurrence
+                        var checkpointClass = (statusRepeated && value.status.status_tw !== 'Selesai') ? "timeline-item-red" : "timeline-item-blue";
 
-                            var link = value.status.status_tw === 'Selesai'
-                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
-                                : "";
+                        html += "<span>" + result2 + "</span>" +
+                            "<li class='" + act + " " + checkpointClass + "' style='margin-left:125px;' data-date='" + result2 + "'>" +
+                            "<div class='timeline-content'>" +
+                            "<h3>" + value.status.status_tw + "</h3>" +
+                            "<p>" + value.keterangan + " " + link + ".</p>" +
+                            "</div>" +
+                            "</li>";
+                    });
 
-                            var result2 = formatDate(d1);
-
-                           var result2 = formatDate(d1);
-
-                            html += "<span>" + result2 + "</span>"+
-                                "<li class='" + act + "' style='margin-left:125px;' data-date='" + result2 + "'>" +
-                                "<div class='timeline-content'>" +
-                                "<h3>" + value.status.status_tw + "</h3>" +
-                                "<p>" + value.keterangan + " " + link + ".</p>" +
-                                "</div>" +
-                                "</li>";
-                        });
-                        
-                        $('#loadTimeline').html(html);
-                        $('#modal-timeline').modal('show');
-                    } else {
-                        alert("Gagal memuat data timeline.");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + xhr.responseText;
-                    console.log(errorMessage);
-                    alert('Error - ' + errorMessage);
+                    $('#loadTimeline').html(html);
+                    $('#modal-timeline').modal('show');
+                } else {
+                    alert("Gagal memuat data timeline.");
                 }
-            });
-        }); 
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = xhr.status + ': ' + xhr.statusText + '\n' + xhr.responseText;
+                console.log(errorMessage);
+                alert('Error - ' + errorMessage);
+            }
+        });
+    });
+
+
+
+
+
     </script>
 @endpush
 
