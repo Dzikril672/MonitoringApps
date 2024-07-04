@@ -37,17 +37,18 @@ class DashboardController extends Controller
             "November",
             "Desember"
         ];
-    
+        
+        // Mengambil semua data
         $lppDdanger = InputLppLayanan::whereNotIn('status_id', [11])
             ->with(['aplikasi', 'status', 'user_created', 'user_updated'])
             ->OrderBy('id', 'DESC')->get();
 
-
-        // dd($lppDdanger);
-    
         $jumlahLppBelum = InputLppLayanan::whereNotIn('status_id', [11])
             ->with(['aplikasi', 'status', 'user_created', 'user_updated'])
             ->orderBy('id', 'DESC')->count();
+
+        // dd($lppDdanger);
+    
     
         $lppInfo = InputLppLayanan::where([
             'thbl' => date('Ym', strtotime(date('Y-m-d') . '- 1 month')),

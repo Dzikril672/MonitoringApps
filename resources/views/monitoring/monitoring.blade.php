@@ -188,31 +188,10 @@
             @endforeach
         </div>
     </div>
+
+    @include('monitoring.timeline')
+
 @endsection
-
-<!-- Modal edit data Departemen -->
-<div class="modal modal-blur fade" id="modal-timeline" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="modalTimelineLabel">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTimelineLabel">Timeline</h5>   
-            </div>
-            <div class="modal-body">
-                <div class="py-2">
-                    <h2 class="font-weight-light text-center text-muted py-3" id="judulTimeline"></h2>
-                </div>
-                <ul id="loadTimeline" class="timeline">
-                    <!-- Timeline items will be dynamically added here -->
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>
-<input type="hidden" name="bulantahun" id="bulantahun" value="{{date('Y-m', strtotime(date('Y-m-d') . '- 1 month' ))}}">
-
 
 @push('myscript')
     <script>
@@ -226,8 +205,8 @@
             $('#pilih-tahun').on('change', function() {
                 var tahunSelected = $(this).val();
                 var cari = $('#cari').val();
-                console.log('Tahun yang dipilih:', tahunSelected);
-                console.log('Data yang dipilih:', cari);
+                // console.log('Tahun yang dipilih:', tahunSelected);
+                // console.log('Data yang dipilih:', cari);
 
                 $.ajax({
                     url: '/getDataByYear',
@@ -296,8 +275,8 @@
             $('#btnCari').on('click', function() {
                 var tahunSelected = $('#pilih-tahun').val();
                 var cari = $('#cari').val();
-                console.log('Tahun yang dipilih:', tahunSelected);
-                console.log('Tahun yang dipilih:', cari);
+                // console.log('Tahun yang dipilih:', tahunSelected);
+                // console.log('Tahun yang dipilih:', cari);
 
                 $.ajax({
                     url: '/getDataByYear',
@@ -365,8 +344,8 @@
             $('#cari').on('keyup', function() {
                 var tahunSelected = $('#pilih-tahun').val();
                 var cari = $(this).val();
-                console.log('Tahun yang dipilih:', tahunSelected);
-                console.log('Tahun yang dipilih:', cari);
+                // console.log('Tahun yang dipilih:', tahunSelected);
+                // console.log('Tahun yang dipilih:', cari);
 
                 $.ajax({
                     url: '/getDataByYear',
@@ -450,54 +429,86 @@
                 success: function (data) {
                     if (data.pesan === 'SUCCESS') {
                         var html = '';
-                        // Fungsi untuk mengonversi angka bulan menjadi nama bulan
+                        var statusCounts = {}; // Counter for all statuses
+
                         function getMonthName(monthNumber) {
                             const monthNames = [
                                 "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
                                 "Juli", "Agustus", "September", "Oktober", "November", "Desember"
                             ];
-
                             return monthNames[monthNumber - 1];
                         }
 
                         var layanan = data.data.layanan;
                         var bulanNama = getMonthName(parseInt(layanan.bulan));
                         $('#judulTimeline').text("BAPP " + layanan.aplikasi.nama_layanan + " Periode " + bulanNama + " - " + layanan.tahun);
+
+                        // Count occurrences of each status
                         $.each(data.data.timeline, function (index, value) {
-                            var act = index === 0 ? "timeline-item active" : "timeline-item";
+                            var status = value.status.status_tw;
+                            if (statusCounts[status]) {
+                                statusCounts[status]++;
+                            } else {
+                                statusCounts[status] = 1;
+                            }
+                        });
+
+                        // Build HTML and apply classes based on statusCounts
+                        $.each(data.data.timeline, function (index, value) {
+                            var status = value.status.status_tw;
                             var d1 = new Date(value.created_at);
 
                             function formatDate(date) {
                                 var d = new Date(date),
-                                    month = '' + (d.getMonth() + 1),
-                                    day = '' + d.getDate(),
-                                    year = d.getFullYear();
+                                month = '' + (d.getMonth() + 1),
+                                day = '' + d.getDate(),
+                                year = d.getFullYear(),
+                                hours = '' + d.getHours(),
+                                minutes = '' + d.getMinutes(),
+                                seconds = '' + d.getSeconds();
 
-                                if (month.length < 2)
-                                    month = '0' + month;
-                                if (day.length < 2)
-                                    day = '0' + day;
+                                if (month.length < 2) month = '0' + month;
+                                if (day.length < 2) day = '0' + day;
+                                if (hours.length < 2) hours = '0' + hours;
+                                if (minutes.length < 2) minutes = '0' + minutes;
+                                if (seconds.length < 2) seconds = '0' + seconds;
 
-                                return [day, month, year].join('-');
+                                return {
+                                    date: [day, month, year].join('-'),
+                                    time: [hours, minutes, seconds].join(':')
+                                };
                             }
 
-                            var link = value.status.status_tw === 'Selesai'
+                            var link = status === 'Selesai'
                                 ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
                                 : "";
 
-                            var result2 = formatDate(d1);
+                            var formatted = formatDate(d1);
+                            var formattedDate = formatted.date + ' ' + formatted.time;
 
-                           var result2 = formatDate(d1);
+                            // Determine class for timeline item
+                            var act = "timeline-item";
+                            if (statusCounts[status] > 1) {
+                                act += " timeline-item-red";
+                            } else {
+                                act += " timeline-item-blue";
+                            }
 
-                            html += "<span>" + result2 + "</span>"+
-                                "<li class='" + act + "' style='margin-left:125px;' data-date='" + result2 + "'>" +
-                                "<div class='timeline-content'>" +
-                                "<h3>" + value.status.status_tw + "</h3>" +
-                                "<p>" + value.keterangan + " " + link + ".</p>" +
-                                "</div>" +
-                                "</li>";
+                            if (index === 0) {
+                                act += " active";
+                            }
+
+                            // Menggabungkan hasil ke dalam HTML
+                            html += "<span>" + formatted.date + "</span>" + "<br>" +
+                                    "<span>" + formatted.time + "</span>" +
+                                    "<li class='" + act + "' style='margin-left:125px;' data-date='" + formattedDate + "'>" +
+                                    "<div class='timeline-content'>" +
+                                    "<h3>" + status + "</h3>" +
+                                    "<p>" + value.keterangan + " " + link + ".</p>" +
+                                    "</div>" +
+                                    "</li>";
                         });
-                        
+
                         $('#loadTimeline').html(html);
                         $('#modal-timeline').modal('show');
                     } else {
@@ -510,7 +521,7 @@
                     alert('Error - ' + errorMessage);
                 }
             });
-        }); 
+        });
     </script>
 @endpush
 
