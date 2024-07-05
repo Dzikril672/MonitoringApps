@@ -498,12 +498,17 @@
                                 act += " active";
                             }
 
+                            // Determine class for date and time
+                            var dateClass = statusCounts[status] > 1 ? 'text-danger' : '';
+                            var timeClass = statusCounts[status] > 1 ? 'text-danger' : '';
+                            var Revision  = statusCounts[status] > 1 ? 'text-danger !important' : '';
+
                             // Menggabungkan hasil ke dalam HTML
-                            html += "<span>" + formatted.date + "</span>" + "<br>" +
-                                    "<span>" + formatted.time + "</span>" +
+                            html += "<span class='" + dateClass + "'>" + formatted.date + "</span><br>" +
+                                    "<span class='" + timeClass + "'>" + formatted.time + "</span>" +
                                     "<li class='" + act + "' style='margin-left:125px;' data-date='" + formattedDate + "'>" +
-                                    "<div class='timeline-content'>" +
-                                    "<h3>" + status + "</h3>" +
+                                    "<div class='timeline-content "+ Revision +"'>" +
+                                    "<h3 class='" + Revision + "'>" + status + "</h3>" +
                                     "<p>" + value.keterangan + " " + link + ".</p>" +
                                     "</div>" +
                                     "</li>";
@@ -522,6 +527,7 @@
                 }
             });
         });
+
     </script>
 @endpush
 
