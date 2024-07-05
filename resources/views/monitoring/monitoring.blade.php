@@ -458,8 +458,12 @@
                             var status = value.status.status_tw;
                             var d1 = new Date(value.created_at);
 
+                            if (value.paraf?.created_at != null) {
+                                var d2 = new Date(value.paraf.created_at);
+                            }
+
                             function formatDate(date) {
-                                var d = new Date(date),
+                                var d = new Date(date.getTime()+date.getTimezoneOffset()*60000),
                                 month = '' + (d.getMonth() + 1),
                                 day = '' + d.getDate(),
                                 year = d.getFullYear(),
@@ -486,6 +490,11 @@
                             var formatted = formatDate(d1);
                             var formattedDate = formatted.date + ' ' + formatted.time;
 
+                            if(d2 != null){
+                                var formatted2 = formatDate(d2);
+                                var formattedDate2 = formatted2.date + ' ' + formatted2.time;
+                            }
+
                             // Determine class for timeline item
                             var act = "timeline-item";
                             if (statusCounts[status] > 1) {
@@ -503,15 +512,22 @@
                             var timeClass = statusCounts[status] > 1 ? 'text-danger' : '';
                             var Revision  = statusCounts[status] > 1 ? 'text-danger !important' : '';
 
+
                             // Menggabungkan hasil ke dalam HTML
                             html += "<span class='" + dateClass + "'>" + formatted.date + "</span><br>" +
                                     "<span class='" + timeClass + "'>" + formatted.time + "</span>" +
                                     "<li class='" + act + "' style='margin-left:125px;' data-date='" + formattedDate + "'>" +
                                     "<div class='timeline-content "+ Revision +"'>" +
                                     "<h3 class='" + Revision + "'>" + status + "</h3>" +
-                                    "<p>" + value.keterangan + " " + link + ".</p>" +
-                                    "</div>" +
-                                    "</li>";
+                                    "<p>" + value.keterangan + " " + link + ".</p>" ;
+                                    // Kondisi untuk menampilkan ket_timeline hanya pada status yang sesuai
+                                    if(d2 != null){
+                                        if (value.status_id === value.paraf.status_id) {
+                                            html += "<small>" + value.paraf.ket_timeline + " " + link + ".</small>"+"<br>"+
+                                            "<small>"+"("+ formattedDate2 +")"+"</small>";
+                                        }
+                                    }
+                                    html += "</div></li>";
                         });
 
                         $('#loadTimeline').html(html);

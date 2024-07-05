@@ -9,6 +9,7 @@ use App\Models\InputLppLayanan;
 use Exception;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\MergeValue;
 use Illuminate\Support\Facades\DB;
 
 class MonitoringController extends Controller
@@ -22,6 +23,9 @@ class MonitoringController extends Controller
     public function monitoring(Request $request){
         $comp = new Component();
         $tahunIni = date('Y');
+
+        // $request = new Request();
+        // $request -> merge(['slug' => '2024-05@05-ap2t']);
 
         $bulanArray = range(1, 12);
         $dataBulan = [];
@@ -58,6 +62,7 @@ class MonitoringController extends Controller
     {
         $prosess = new Prosess();
         $data = $prosess->get_timeline($request);
+        // dd($data);
 
         return response()->json([
             'pesan' => 'SUCCESS',
