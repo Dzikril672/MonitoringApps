@@ -195,6 +195,14 @@
 
 @push('myscript')
     <script>
+        function getMonthName(monthNumber) {
+            const monthNames = [
+                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            ];
+            return monthNames[monthNumber - 1];
+        }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -431,13 +439,7 @@
                         var html = '';
                         var statusCounts = {}; // Counter for all statuses
 
-                        function getMonthName(monthNumber) {
-                            const monthNames = [
-                                "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
-                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                            ];
-                            return monthNames[monthNumber - 1];
-                        }
+                        
 
                         var layanan = data.data.layanan;
                         var bulanNama = getMonthName(parseInt(layanan.bulan));

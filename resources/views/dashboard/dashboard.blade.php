@@ -193,6 +193,14 @@
 @push('myscript')
 
 <script>
+    function getMonthName(monthNumber) {
+        const monthNames = [
+            "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", 
+            "Jul", "Aug", "Sep", "Okt", "Nov", "Des"
+        ];
+        return monthNames[monthNumber - 1];
+    }
+
     $(document).ready(function() {
         $('#cariBelum').on('keyup', function() {
             let cariBelum = $(this).val();
@@ -207,6 +215,8 @@
                         $.each(response, function(key, d) {
                             var namaLayanan = d.aplikasi.nama_layanan;
                             var status = d.status.status_out_tw;
+                            var bulan = getMonthName(parseInt(d.bulan));
+                            var tahun = d.tahun;
                             let item = `
                                 <ul class="listview image-listview">
                                     <li>
@@ -217,7 +227,7 @@
                                                     <br>
                                                     <small class="text-muted">${status}</small>
                                                 </div>
-                                                <span class="badge bg-belum">{{ $comp->tgl_indo($d->bulan) }} {{ $d->tahun }}</span>
+                                                <span class="badge bg-belum">${bulan} ${tahun }</span>
                                             </div>
                                         </div>
                                     </li>
@@ -244,6 +254,8 @@
                         $.each(response, function(key, d) {
                             var namaLayanan = d.aplikasi.nama_layanan;
                             var status = d.status.status_out_tw;
+                            var bulan = getMonthName(parseInt(d.bulan));
+                            var tahun = d.tahun;
                             let item = `
                                 <ul class="listview image-listview">
                                     <li>
@@ -254,7 +266,7 @@
                                                     <br>
                                                     <small class="text-muted">${status}</small>
                                                 </div>
-                                                <span class="badge bg-belum">{{ $comp->tgl_indo($d->bulan) }} {{ $d->tahun }}</span>
+                                                <span class="badge bg-belum">${bulan } ${tahun }</span>
                                             </div>
                                         </div>
                                     </li>
@@ -279,6 +291,8 @@
                     $('#resultContainerBerjalan').html('');
                     if (response.length > 0) {
                         $.each(response, function(key, i) {
+                            var bulan = getMonthName(parseInt(d.bulan));
+                            var tahun = d.tahun;
                             let item = `
                                 <ul class="listview image-listview">
                                     <li>
@@ -289,7 +303,7 @@
                                                     <br>
                                                     <small class="text-muted">${i.status.status_out_tw}</small>
                                                 </div>
-                                                <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                                                <span class="badge bg-udah">${bulan } ${tahun }</span>
                                             </div>
                                         </div>
                                     </li>
@@ -314,6 +328,8 @@
                     $('#resultContainerBerjalan').html('');
                     if (response.length > 0) {
                         $.each(response, function(key, i) {
+                            var bulan = getMonthName(parseInt(d.bulan));
+                            var tahun = d.tahun;
                             let item = `
                                 <ul class="listview image-listview">
                                     <li>
@@ -324,7 +340,7 @@
                                                     <br>
                                                     <small class="text-muted">${i.status.status_out_tw}</small>
                                                 </div>
-                                                <span class="badge bg-udah">{{$comp->tgl_indo($i->bulan)}} {{$i->tahun}}</span>
+                                                <span class="badge bg-udah">${bulan } ${tahun }</span>
                                             </div>
                                         </div>
                                     </li>
