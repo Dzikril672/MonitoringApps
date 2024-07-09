@@ -5312,6 +5312,19 @@ textarea,
   /* box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); */
 }
 
+.timeline dl::before {
+  content: '*';
+  position: absolute;
+
+  left: 60px;
+  width: 10px;
+  height: 10;
+  /* background-color: #000; */
+  /* border: 2px solid #fff; */
+  border-radius: 50%;
+  /* box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); */
+}
+
 .timeline li.active::before {
   background-color: #007bff;
   box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);

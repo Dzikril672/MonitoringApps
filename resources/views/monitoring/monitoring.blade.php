@@ -523,8 +523,10 @@
                                     // Kondisi untuk menampilkan ket_timeline hanya pada status yang sesuai
                                     if(d2 != null){
                                         if (value.status_id === value.paraf.status_id) {
-                                            html += "<small>" + value.paraf.ket_timeline + " " + link + ".</small>"+"<br>"+
-                                            "<small>"+"("+ formattedDate2 +")"+"</small>";
+                                            html += "<dl style='margin-left:20px'>"+
+                                                "<small>" + value.paraf.ket_timeline + " " + link + ".</small>"+"<br>"+
+                                                "<small>"+"("+ formattedDate2 +")"+"</small>"+"</dl>"
+                                                ;
                                         }
                                     }
                                     html += "</div></li>";
