@@ -486,8 +486,9 @@
                             }
 
                             var link = status === 'Selesai'
-                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' target='_blank' rel='noopener noreferrer' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
+                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
                                 : "";
+
 
                             var formatted = formatDate(d1);
                             var formattedDate = formatted.date + ' ' + formatted.time;
