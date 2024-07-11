@@ -51,17 +51,16 @@ Route::middleware(['auth'])->group(function () {
     
     // Monitoring
     Route::get('/monitoring', [MonitoringController::class, 'monitoring'])->name('monitoring');
-    Route::get('/getmonitoring', [MonitoringController::class, 'monitoring'])->name('monitoring.index');
     Route::post('/getDataByYear', [MonitoringController::class, 'getDataByYear'])->name('getDataByYear');
     
     // Timeline
-    Route::post('/get-timeline', [MonitoringController::class, 'get_timeline'])->name('get-timeline');
+    Route::post('/get-timeline', [MonitoringController::class, 'get_timeline'])->name('get-timeline.monitoring');
     
     // Test
-    Route::post('/getDataByYear', [TestController::class, 'getDataByYear'])->name('getDataByYear.test');
-    Route::post('/get-timeline', [TestController::class, 'get_timeline'])->name('get-timeline.test');
-    Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
-    Route::get('/search-monitoring', [TestController::class, 'search'])->name('search-monitoring.test');
+    // Route::post('/getDataByYear', [TestController::class, 'getDataByYear'])->name('getDataByYear.test');
+    // Route::post('/get-timeline', [TestController::class, 'get_timeline'])->name('get-timeline.test');
+    // Route::get('/testmonitoring', [TestController::class, 'index'])->name('test');
+    // Route::get('/search-monitoring', [TestController::class, 'search'])->name('search-monitoring.test');
 });
 
 

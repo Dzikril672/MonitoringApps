@@ -20,6 +20,9 @@
     {{-- fontawesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
+    <!-- JS For PDF  -->
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
     <script>
         am4core.ready(function () {
 

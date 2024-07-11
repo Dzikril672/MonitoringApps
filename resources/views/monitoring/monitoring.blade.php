@@ -427,7 +427,7 @@
             var slug = $(this).data('slug');
             $.ajax({
                 type: 'POST',
-                url: '{{ route('get-timeline.test') }}',
+                url: '{{ route('get-timeline.monitoring') }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
