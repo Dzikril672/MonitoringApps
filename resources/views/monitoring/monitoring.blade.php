@@ -486,7 +486,7 @@
                             }
 
                             var link = status === 'Selesai'
-                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran</a>"
+                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran BAPP</a> <br> <a href='/proxy.php?path=" + encodeURIComponent(value.file_path_lpp) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran LPP</a>"
                                 : "";
 
 
