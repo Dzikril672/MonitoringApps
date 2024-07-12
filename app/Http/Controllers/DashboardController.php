@@ -7,6 +7,7 @@ use App\Models\InputLppLayanan;
 use App\Models\LayananAplikasi;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -18,7 +19,8 @@ class DashboardController extends Controller
     }
     
     public function home(Request $request) {
-    
+        
+        $user = Auth::user();
         $comp = new Component();
         $bulanIni = date("m") * 1; //mengambil data bulan berjalan agar dapat dibaca data nama bulan (dalam bentuk angka)
         $tahunIni = date("Y");
@@ -37,6 +39,13 @@ class DashboardController extends Controller
             "November",
             "Desember"
         ];
+
+        // Fetch the user's role information
+        $role = DB::table('users as u')
+            ->join('master_roles as mr', 'u.role', '=', 'mr.id_role')
+            ->select('mr.nama_role')
+            ->where('u.id', '=', $user->id)
+            ->first();
         
         // Mengambil semua data
         $lppDdanger = InputLppLayanan::whereNotIn('status_id', [11])

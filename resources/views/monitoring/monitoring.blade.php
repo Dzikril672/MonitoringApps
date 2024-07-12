@@ -573,11 +573,17 @@
 
                             var link = "";
 
+                            // Debugging logs
+                            // console.log("Status:", status);
+                            // console.log("File Path BAPP:", value.file_path);
+                            // console.log("File Path LPP:", value.file_path_lpp);
+                            // console.log("File Path Pra LPP:", value.file_path_pra_lpp);
+
                             if (status === 'Selesai') {
                                 link = "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran BAPP</a>" + 
                                         "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path_lpp) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran LPP</a>";
                             } else if (status === 'Pembuatan dokumen') {
-                                link = "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path_pra_lpp) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran Pra LPP</a>";
+                                link = "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran Pra LPP</a>";
                             }
 
                             var formatted = formatDate(d1);

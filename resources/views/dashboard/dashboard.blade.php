@@ -7,8 +7,8 @@
                 <img src="{{asset('assets/img/sample/avatar/avatar1.jpg')}}" alt="avatar" class="imaged w64 rounded">
             </div>
             <div id="user-info" style="color:white;">
-                <h2 id="user-name">{{ Auth::user()->name }}</h2>
-                <span id="user-role">Technical Support</span>
+                <h2 id="user-name">{{ $user->name }}</h2>
+                <span id="user-role">{{ $role->nama_role }}</span>
             </div>
         </div>
     </div>
