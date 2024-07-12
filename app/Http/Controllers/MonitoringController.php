@@ -79,6 +79,8 @@ class MonitoringController extends Controller
     {
         $Pilihtahun = $request->input('tahun');
         $cari = $request->input('cari');
+        $sort = $request->input('sort');
+
         // \Log::info('Tahun yang diterima: ' . $Pilihtahun);
         $bulanArray = range(1, 12);
         $dataBulan = [];
@@ -98,6 +100,15 @@ class MonitoringController extends Controller
                 $query->whereHas('aplikasi', function ($query) use ($cari) {
                     $query->where('nama_layanan', 'like', '%'.$cari.'%');
                 });
+            }
+
+             // Filter based on sort parameter
+            if ($request->has('sort') && !empty($sort)) {
+                if ($sort == 'selesai') {
+                    $query->whereIn('status_id', [11]);
+                } elseif ($sort == 'proses') {
+                    $query->whereNotIn('status_id', [11]);
+                }
             }
         
             // Get the data for the current month and store it in the $dataBulan array

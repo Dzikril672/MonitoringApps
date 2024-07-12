@@ -98,7 +98,16 @@
     <div class="row appHeader bg-dasar" style="margin-top: 50px;">
         <div class="col">
             <div class="row mt-2">
-                <div class="col-6"></div>
+                <div class="col-6">
+                    <div class="sort-container">
+                        <label for="sort" class="tahun-label">Sort :</label>
+                        <select name="sort" id="sort" class="form-control" style="width:50%;">
+                            <option style="text-align:right" value=""> Semua </option>
+                            <option style="text-align:right" value="proses"> Proses </option>
+                            <option style="text-align:right" value="selesai"> Selesai </option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-6">   
                     <div class="tahun-container">
                         <label for="pilih-tahun" class="tahun-label">Tahun :</label>
@@ -213,8 +222,9 @@
             $('#pilih-tahun').on('change', function() {
                 var tahunSelected = $(this).val();
                 var cari = $('#cari').val();
+                var sort = $('#sort').val();
                 // console.log('Tahun yang dipilih:', tahunSelected);
-                // console.log('Data yang dipilih:', cari);
+                // console.log('Data yang dipilih:', sort);
 
                 $.ajax({
                     url: '/getDataByYear',
@@ -222,7 +232,79 @@
                     dataType: "json",
                     data: { 
                         tahun: tahunSelected,
-                        cari: cari
+                        cari: cari,
+                        sort: sort
+                     },
+                    success: function(response) {
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html(''); // Kosongkan isi #resultCari untuk setiap bulan
+                        });
+
+                        if (Object.keys(response).length > 0) {
+                            $.each(response, function(bulan, dataBulan) {
+                                if (dataBulan.length > 0) {
+                                    $.each(dataBulan, function(key, data) {
+                                        let namaLayanan = data.aplikasi.nama_layanan;
+                                        let statusTW = data.status.status_out_tw;
+                                        let monthId = `resultCari${bulan}`;
+
+                                        let item = `
+                                            <ul class="listview image-listview">
+                                                <li>
+                                                    <a href="#" class="listCard digi" data-slug="${data.slug}">
+                                                        <div class="item">
+                                                            <div class="in">
+                                                                <div>
+                                                                    <b>${namaLayanan}</b>
+                                                                    <br>
+                                                                    <small class="text-muted">${statusTW}</small>
+                                                                </div>
+                                                                <span class="badge ${statusTW === 'Selesai' ? "bg-udah" : "bg-belum"}">
+                                                                    ${statusTW === 'Selesai' ? 'Selesai' : 'Proses'}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>`;
+                                        // console.log(monthId, item);
+                                        $(`#${monthId}`).append(item); // Tambahkan item baru ke dalam ID yang sesuai
+                                    });
+                                } else {
+                                    let monthId = `resultCari${bulan}`;
+                                    $(`#${monthId}`).html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                                }
+                            });
+                        } else {
+                            $('.tab-pane').each(function() {
+                                $(this).find('[id^=resultCari]').html('<div style="text-align: center;">Tidak Ada Layanan</div>');
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                        $('.tab-pane').each(function() {
+                            $(this).find('[id^=resultCari]').html('<div style="text-align: center; color: red;">Terjadi kesalahan saat mengambil data. Silakan coba lagi.</div>');
+                        });
+                    }
+                });
+            });
+            
+            $('#sort').on('change', function() {
+                var tahunSelected = $('#pilih-tahun').val();
+                var cari = $('#cari').val();
+                var sort = $(this).val();
+                // console.log('Tahun yang dipilih:', tahunSelected);
+                // console.log('Data yang dipilih:', sort);
+
+                $.ajax({
+                    url: '/getDataByYear',
+                    type: 'POST',
+                    dataType: "json",
+                    data: { 
+                        tahun: tahunSelected,
+                        cari: cari,
+                        sort:sort
                      },
                     success: function(response) {
                         $('.tab-pane').each(function() {
@@ -283,6 +365,7 @@
             $('#btnCari').on('click', function() {
                 var tahunSelected = $('#pilih-tahun').val();
                 var cari = $('#cari').val();
+                var sort = $('#sort').val();
                 // console.log('Tahun yang dipilih:', tahunSelected);
                 // console.log('Tahun yang dipilih:', cari);
 
@@ -292,7 +375,8 @@
                     dataType: "json",
                     data: { 
                         tahun: tahunSelected,
-                        cari: cari
+                        cari: cari,
+                        sort: sort
                      },
                     success: function(response) {
                         $('.tab-pane').each(function() {
@@ -352,6 +436,7 @@
             $('#cari').on('keyup', function() {
                 var tahunSelected = $('#pilih-tahun').val();
                 var cari = $(this).val();
+                var sort = $('#sort').val();
                 // console.log('Tahun yang dipilih:', tahunSelected);
                 // console.log('Tahun yang dipilih:', cari);
 
@@ -361,7 +446,8 @@
                     dataType: "json",
                     data: { 
                         tahun: tahunSelected,
-                        cari: cari
+                        cari: cari,
+                        sort: sort
                      },
                     success: function(response) {
                         $('.tab-pane').each(function() {
@@ -485,10 +571,14 @@
                                 };
                             }
 
-                            var link = status === 'Selesai'
-                                ? "<a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran BAPP</a> <br> <a href='/proxy.php?path=" + encodeURIComponent(value.file_path_lpp) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran LPP</a>"
-                                : "";
+                            var link = "";
 
+                            if (status === 'Selesai') {
+                                link = "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran BAPP</a>" + 
+                                        "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path_lpp) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran LPP</a>";
+                            } else if (status === 'Pembuatan dokumen') {
+                                link = "<br><a href='/proxy.php?path=" + encodeURIComponent(value.file_path_pra_lpp) + "' class='text-decoration-none' data-bs-toggle='tooltip' data-bs-placement='left' title='Klik untuk mengunduh file usulan lampiran'><i class='bx bx-file-blank mr-1'></i> File Lampiran Pra LPP</a>";
+                            }
 
                             var formatted = formatDate(d1);
                             var formattedDate = formatted.date + ' ' + formatted.time;

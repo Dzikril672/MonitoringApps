@@ -64,6 +64,15 @@ button:focus {
 
 }
 
+.sort-container {
+  display: flex;
+  align-items: baseline;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+
+}
+
 .tahun-label {
   font-size: 16px;
   margin-right: 10px;
